@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3EB82A532AB0F69700A51574 /* CameraCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB82A522AB0F69700A51574 /* CameraCaptureView.swift */; };
+		3EB82A552AB0F6B100A51574 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB82A542AB0F6B100A51574 /* ImagePickerView.swift */; };
+		3EB82A572AB103E900A51574 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB82A562AB103E900A51574 /* LocationManager.swift */; };
+		3EB82A592AB2427200A51574 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB82A582AB2427200A51574 /* LocationData.swift */; };
 		3EC9C98E2AB0C67600B3480D /* ProtocolApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC9C98D2AB0C67600B3480D /* ProtocolApp.swift */; };
 		3EC9C9902AB0C67600B3480D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC9C98F2AB0C67600B3480D /* ContentView.swift */; };
 		3EC9C9922AB0C67700B3480D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EC9C9912AB0C67700B3480D /* Assets.xcassets */; };
@@ -14,6 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3EB82A522AB0F69700A51574 /* CameraCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCaptureView.swift; sourceTree = "<group>"; };
+		3EB82A542AB0F6B100A51574 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		3EB82A562AB103E900A51574 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		3EB82A582AB2427200A51574 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		3EC9C98A2AB0C67600B3480D /* Protocol.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Protocol.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EC9C98D2AB0C67600B3480D /* ProtocolApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolApp.swift; sourceTree = "<group>"; };
 		3EC9C98F2AB0C67600B3480D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +40,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3EB82A512AB0F0C700A51574 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				3EB82A522AB0F69700A51574 /* CameraCaptureView.swift */,
+				3EB82A542AB0F6B100A51574 /* ImagePickerView.swift */,
+				3EB82A562AB103E900A51574 /* LocationManager.swift */,
+				3EB82A582AB2427200A51574 /* LocationData.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		3EC9C9812AB0C67600B3480D = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +70,7 @@
 		3EC9C98C2AB0C67600B3480D /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				3EB82A512AB0F0C700A51574 /* Camera */,
 				3EC9C98D2AB0C67600B3480D /* ProtocolApp.swift */,
 				3EC9C98F2AB0C67600B3480D /* ContentView.swift */,
 				3EC9C9912AB0C67700B3480D /* Assets.xcassets */,
@@ -137,6 +157,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EB82A592AB2427200A51574 /* LocationData.swift in Sources */,
+				3EB82A552AB0F6B100A51574 /* ImagePickerView.swift in Sources */,
+				3EB82A532AB0F69700A51574 /* CameraCaptureView.swift in Sources */,
+				3EB82A572AB103E900A51574 /* LocationManager.swift in Sources */,
 				3EC9C9902AB0C67600B3480D /* ContentView.swift in Sources */,
 				3EC9C98E2AB0C67600B3480D /* ProtocolApp.swift in Sources */,
 			);
@@ -270,6 +294,9 @@
 				DEVELOPMENT_TEAM = 7D837Q8LBZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) Need Camera to Take Photos Within The App";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "$(PRODUCT_NAME) Need the Location to Use the Data for Photos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "$(PRODUCT_NAME) Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +326,9 @@
 				DEVELOPMENT_TEAM = 7D837Q8LBZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) Need Camera to Take Photos Within The App";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "$(PRODUCT_NAME) Need the Location to Use the Data for Photos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "$(PRODUCT_NAME) Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
