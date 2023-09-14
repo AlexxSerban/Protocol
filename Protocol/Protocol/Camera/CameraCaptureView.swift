@@ -11,22 +11,32 @@ import CoreLocationUI
 import MapKit
 
 struct CameraCaptureView: View {
+    @ObservedObject var viewModel = CameraCaptureModelView()
     @State private var isShowingImagePicker = false
     @State private var selectedImage: UIImage?
-    @EnvironmentObject var locationManager : LocationManager
-    
+    @EnvironmentObject var locationManager: LocationManager
+
     var body: some View {
         VStack {
             if let image = selectedImage {
                 Image(uiImage: image)
                     .resizable()
+                    .frame(width: 250, height: 250)
                     .scaledToFit()
+                
+                Button("Salvează cu detalii de locație") {
+                    if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(image, locationData: locationManager.locationData) {
+//                        $viewModel.checkAndRequestPermission // Verificați și solicitați permisiunea de a accesa biblioteca de fotografii
+                        UIImageWriteToSavedPhotosAlbum(imageWithLocationDetails, nil, nil, nil)
+                    }
+                }
+
             } else {
                 Button("Deschide Camera") {
                     isShowingImagePicker.toggle()
                 }
             }
-            
+
             VStack(alignment: .leading) {
                 if let location = locationManager.location {
                     Text("Latitude: \(location.coordinate.latitude)")
@@ -46,13 +56,13 @@ struct CameraCaptureView: View {
             ImagePickerView(selectedImage: $selectedImage, isPresented: $isShowingImagePicker)
         }
         .onAppear {
-            locationManager.reverseGeocoding(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
+            locationManager.locationData.latitude = locationManager.location?.coordinate.latitude ?? 0.0
+            locationManager.locationData.longitude = locationManager.location?.coordinate.longitude ?? 0.0
+            locationManager.reverseGeocoding(latitude: (locationManager.location?.coordinate.latitude) ?? 0.0, longitude: (locationManager.location?.coordinate.longitude) ?? 0.0)
             locationManager.getCurrentDateTime()
         }
     }
 }
-
-
 
 struct CameraCaptureView_Previews: PreviewProvider {
     static var previews: some View {
@@ -60,4 +70,3 @@ struct CameraCaptureView_Previews: PreviewProvider {
             .environmentObject(LocationManager())
     }
 }
-
