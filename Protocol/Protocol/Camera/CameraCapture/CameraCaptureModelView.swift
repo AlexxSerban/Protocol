@@ -11,6 +11,8 @@ import UIKit
 
 class CameraCaptureModelView: ObservableObject {
     
+    @Published var entryImagesData = EntryImagesData()
+    
     func addLocationDetailsToImage(_ image: UIImage, locationData: LocationData) -> UIImage? {
         // Create a graphics context
         UIGraphicsBeginImageContext(image.size)
@@ -20,10 +22,10 @@ class CameraCaptureModelView: ObservableObject {
         image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
         
         // Configure text attributes
-        let textFont = UIFont.boldSystemFont(ofSize: 130) // Schimbați fontul și dimensiunea textului
-        let textColor = UIColor.white // Culoarea textului
+        let textFont = UIFont.boldSystemFont(ofSize: 130) // Change the font and text size
+        let textColor = UIColor.white // Text color
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left // Alinierea textului la stânga
+        paragraphStyle.alignment = .left // Align text to the left
         let textAttributes: [NSAttributedString.Key: Any] = [
             .font: textFont,
             .foregroundColor: textColor,
@@ -34,10 +36,10 @@ class CameraCaptureModelView: ObservableObject {
         let textRect = CGRect(x: 10, y: 10, width: image.size.width - 20, height: image.size.height - 20)
         
         // Calculate the rect for the black background
-        let blackRectHeight: CGFloat = 700 // Înălțimea zonei cu fundal negru (puteți ajusta această valoare)
+        let blackRectHeight: CGFloat = 700 // Height of the black background area (you can adjust this value)
         let blackRect = CGRect(x: 0, y: 0, width: image.size.width, height: blackRectHeight)
         
-        // Redefiniți culoarea neagră cu o componentă alfa mai mică (0.7 pentru 70% opacitate)
+        // Redefine black color with lower alpha component (0.7 for 70% opacity)
         let blackColor = UIColor.black.withAlphaComponent(0.9)
         
         // Create a black background with the adjusted color
@@ -57,7 +59,7 @@ class CameraCaptureModelView: ObservableObject {
         // Load the additional image from the assets
         if let iconImage = UIImage(named: "IconTechnoskopic") {
             // Calculate the position and size of the additional image
-            let iconSize = CGSize(width: 600, height: 250) // Ajustați dimensiunile imaginii adăugate
+            let iconSize = CGSize(width: 600, height: 250) // Adjust the dimensions of the added image
             let iconRect = CGRect(x: image.size.width - iconSize.width - 10, y: image.size.height - iconSize.height - 10, width: iconSize.width, height: iconSize.height)
             
             // Draw the additional image on the image
@@ -69,7 +71,13 @@ class CameraCaptureModelView: ObservableObject {
         
         return editedImage
     }
-
-
-
+    
+    func saveImageData(image: UIImage) {
+        if entryImagesData.firstImage == nil {
+            entryImagesData.firstImage = image
+        } else if entryImagesData.secondImage == nil {
+            entryImagesData.secondImage = image
+        }
+    }
 }
+
