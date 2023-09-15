@@ -17,7 +17,6 @@ class LocationManager: NSObject, ObservableObject {
     let geocoder = CLGeocoder()
     @ObservedObject var locationData = LocationData()
     
-    
     override init() {
         super.init()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -59,6 +58,16 @@ class LocationManager: NSObject, ObservableObject {
             }
         })
     }
+    
+    func configureLocationData() {
+        if let currentLocation = locationManager.location {
+            locationData.latitude = currentLocation.coordinate.latitude
+            locationData.longitude = currentLocation.coordinate.longitude
+            reverseGeocoding(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            getCurrentDateTime()
+        } else {}
+    }
+
 }
 
 extension LocationManager: CLLocationManagerDelegate {
