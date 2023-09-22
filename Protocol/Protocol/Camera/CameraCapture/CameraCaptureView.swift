@@ -51,9 +51,6 @@ struct CameraCaptureView: View {
         .sheet(isPresented: $isShowingImagePicker) {
             ImagePickerView(selectedImage: $selectedImage, isPresented: $isShowingImagePicker)
         }
-        .onAppear {
-            locationManager.configureLocationData()
-        }
     }
 }
 

@@ -13,20 +13,32 @@ struct CaptureFirstImageView: View {
     @State private var isRemakeVisible = true
     
     @Binding var isFirstImageCaptured: Bool
-    var viewModel: CameraCaptureModelView
-    var locationManager: LocationManager
+    @ObservedObject var viewModel: CameraCaptureModelView
+    @ObservedObject var locationManager: LocationManager
     
     var body: some View {
         VStack(spacing: 16) {
             if selectedImage == nil {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
+                        VStack(spacing: 16) {
+                                Text("Location Details")
+                                    .font(.headline)
+                                    .foregroundColor(Color("Text"))
+                                    .padding()
+                                
+                                Text("Street: \(locationManager.locationData.street) \(locationManager.locationData.streetNumber)")
+                                Text("City: \(locationManager.locationData.postalCode) \(locationManager.locationData.city)")
+                                Text("Country: \(locationManager.locationData.country)")
+                                Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
+                            }
+                        
                         Text("Open the camera to take a photo and obtain location details.")
                             .font(.callout)
                             .foregroundColor(Color("Text"))
                             .multilineTextAlignment(.leading)
                             .padding()
-                        
+                      
                         Button(action: {
                             isShowingImagePicker.toggle()
                         }) {
@@ -90,6 +102,9 @@ struct CaptureFirstImageView: View {
             }
         }
         .padding()
+        .onAppear {
+            locationManager.configureLocationData()
+        }
     }
 }
 
