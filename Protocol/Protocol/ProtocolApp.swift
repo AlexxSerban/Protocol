@@ -28,8 +28,10 @@ struct ProtocolApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CameraCaptureView()
-                .environmentObject(locationManager)
+//            CameraCaptureView()
+//                .environmentObject(locationManager)
+//            SpreadsheetView()
+            MainSpreadsheetView()
         }
     }
 }

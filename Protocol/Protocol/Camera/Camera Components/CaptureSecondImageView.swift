@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CaptureSecondImageView: View {
     @Binding var selectedImage: UIImage?
-    var viewModel: CameraCaptureModelView
-    var locationManager: LocationManager
+    @ObservedObject var viewModel: CameraCaptureModelView
+    @ObservedObject var locationManager: LocationManager
     @Binding var isSecondImageCaptured: Bool
     @Binding var isBothImagesCaptured: Bool
     @Binding var isShowingImagePicker: Bool
@@ -21,6 +21,17 @@ struct CaptureSecondImageView: View {
             if selectedImage == nil {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack{
+                        VStack(spacing: 16) {
+                                Text("Location Details")
+                                    .font(.headline)
+                                    .foregroundColor(Color("Text"))
+                                    .padding()
+                                
+                                Text("Street: \(locationManager.locationData.street) \(locationManager.locationData.streetNumber)")
+                                Text("City: \(locationManager.locationData.postalCode) \(locationManager.locationData.city)")
+                                Text("Country: \(locationManager.locationData.country)")
+                                Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
+                            } 
                         Text("Open the camera to take a photo and obtain location details.")
                             .font(.callout)
                             .foregroundColor(Color("Text"))

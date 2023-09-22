@@ -15,7 +15,7 @@ class LocationManager: NSObject, ObservableObject {
     @Published var region = MKCoordinateRegion()
     @Published var location: CLLocation?
     let geocoder = CLGeocoder()
-    @ObservedObject var locationData = LocationData()
+    @Published var locationData = LocationData()
     
     override init() {
         super.init()
@@ -31,7 +31,6 @@ class LocationManager: NSObject, ObservableObject {
         dateFormatter.dateFormat = "HH:mm:ss"
         let now = Date()
         let currentTime = dateFormatter.string(from: now)
-        
         let dateFormatter2 = DateFormatter()
         dateFormatter2.dateFormat = "dd.MM.yyyy"
         let nowDate = dateFormatter2.string(from: now)
@@ -39,6 +38,7 @@ class LocationManager: NSObject, ObservableObject {
         locationData.time = currentTime + " " + nowDate
     }
     
+    @MainActor
     func reverseGeocoding(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         geocoder.reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude), completionHandler: {(placemarks, error) -> Void in
             if error != nil {
@@ -59,18 +59,22 @@ class LocationManager: NSObject, ObservableObject {
         })
     }
     
+    @MainActor
     func configureLocationData() {
         if let currentLocation = locationManager.location {
             locationData.latitude = currentLocation.coordinate.latitude
             locationData.longitude = currentLocation.coordinate.longitude
-            reverseGeocoding(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            reverseGeocoding(latitude: locationData.latitude, longitude: locationData.longitude)
             getCurrentDateTime()
-        } else {}
+        } else {
+            print("Failed to obtain current location.")
+        }
     }
 
 }
 
 extension LocationManager: CLLocationManagerDelegate {
+    @MainActor
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {return}
         self.location = location
