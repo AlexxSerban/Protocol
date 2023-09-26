@@ -18,7 +18,7 @@ enum RodSize: String, CaseIterable, Identifiable {
     
     var id: Self { self }
     
-    var metersValue: Double {
+    var metersValue: Float {
         switch self {
         case .halfMeter:
             return 0.5

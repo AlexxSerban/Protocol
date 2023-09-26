@@ -75,7 +75,7 @@ struct SpreadsheetView: View {
                         ForEach(0..<numberOfColumns, id: \.self) { column in
                             Divider()
                             if row == 0 && column == 0 {
-                                let difference = selectedRodSize.metersValue - (firstRodSize as NSString).doubleValue
+                                let difference = selectedRodSize.metersValue - (firstRodSize as NSString).floatValue
                                 TextField(String(format: "%.2f", difference), text: $cellValues[row][column])
                                     .multilineTextAlignment(.center)
                             } else {
@@ -97,9 +97,9 @@ struct SpreadsheetView: View {
                     .cornerRadius(10)
                 
                 Button(action: {
-                    if let enteredValue = Double(userEnteredValue) {
+                    if let enteredValue = Float(userEnteredValue) {
                         let lastRow = numberOfRowsCalculated - 1
-                        let difference = selectedRodSize.metersValue - enteredValue
+                        let difference = Float(selectedRodSize.metersValue) - enteredValue
                         cellValues[lastRow][0] = String(format: "%.2f", difference)
                     }
                 }) {
@@ -146,7 +146,7 @@ struct SpreadsheetView: View {
             // Check if the input value for the number of meters is valid and greater than 0.
             if let metersValue = Double(numberOfMeters), metersValue > 0 {
                 // Calculate the number of rows needed to cover the input meters.
-                numberOfRowsCalculated = Int(ceil(metersValue / rodSizeInMeters))
+                numberOfRowsCalculated = Int(ceil(metersValue / (Double(rodSizeInMeters))))
             } else {
                 // If the value for the number of meters is not valid or <= 0, set the number of rows to 0.
                 numberOfRowsCalculated = 0
@@ -158,7 +158,7 @@ struct SpreadsheetView: View {
             // Check if there is at least one row in the cell values matrix.
             if numberOfRowsCalculated > 0 {
                 // Calculate the difference between the selected rod size and the first rod size in the model, then format it as a string.
-                let difference = selectedRodSize.metersValue - (firstRodSize as NSString).doubleValue
+                let difference = selectedRodSize.metersValue - (firstRodSize as NSString).floatValue
                 cellValues[0][0] = String(format: "%.2f", difference)
                 
                 // Calculate the cumulative length of rods for the other rows and format the values as strings.
