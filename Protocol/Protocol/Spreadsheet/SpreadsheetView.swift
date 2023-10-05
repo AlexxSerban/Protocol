@@ -19,17 +19,14 @@ struct SpreadsheetView: View {
     @Binding var userEnteredValue: String
     @Binding var isTableFullyCompleted: Bool
     @Binding var spreadsheetShowAlert: Bool
+    @Binding var showGraph: Bool
     
     @State var viewModel: SpreadsheetViewModel
     
     var body: some View {
         
         VStack(spacing: 30) {
-            
-            Text("rows-> \(numberOfRowsCalculated)")
-            Text("numberOfColumns-> \(numberOfColumns)")
-            Text("numberOfMeters-> \(numberOfMeters)")
-            Text("cellValues-> \(String(cellValues.isEmpty))")
+
             List {
                 HStack(spacing: 0) {
                     Text("HDD DIAGRAM")
@@ -115,6 +112,7 @@ struct SpreadsheetView: View {
                 Button(action: {
                     if viewModel.checkTableCompletion(numberOfRowsCalculated: numberOfRowsCalculated, numberOfColumns: numberOfColumns, cellValues: cellValues) {
                         // Tabelul este complet
+                        showGraph = true
                         print("Tabelul este complet. Execută acțiunea Next.")
                     } else {
                         // Tabelul nu este complet, arătați alerta
@@ -168,6 +166,16 @@ struct SpreadsheetView: View {
                     cellValues[row][0] = String(format: "%.2f", cumulativeLength)
                 }
                 
+                // Generate random values for column 1
+                    for row in 0..<numberOfRowsCalculated {
+                        cellValues[row][1] = String(format: "%.2f", generateRandomValue())
+                    }
+                
+                // Generate increasing values for column 2
+                for row in 0..<numberOfRowsCalculated {
+                        cellValues[row][2] = String(format: "%.2f", generateIncreasingValues(forRow: row))
+                    }
+                
                 // Add "first partial rod" to the last cell in the first row (in column with index 0).
                 if numberOfColumns > 0 {
                     cellValues[0][numberOfColumns - 1] = "first partial rod"
@@ -185,6 +193,18 @@ struct SpreadsheetView: View {
             print("cellValues: \(cellValues)")
         }
     }
+    
+    func generateRandomValue() -> Float {
+        return Float.random(in: 90...210)
+    }
+    func generateIncreasingValues(forRow row: Int) -> Float {
+        // Calculează valoarea în funcție de rândul curent
+        let minValue: Float = -20.0
+        let step: Float = 0.8 // Ajustează pasul pentru a obține valori corespunzătoare
+        return minValue + Float(row) * step
+    }
+
+
 }
 
 struct SpreadsheetView_Previews: PreviewProvider {
@@ -197,11 +217,12 @@ struct SpreadsheetView_Previews: PreviewProvider {
     @State static var cellValues: [[String]] = []
     @State static var isTableFullyCompleted: Bool = false
     @State static var spreadsheetShowAlert: Bool = false
+    @State static var showGraph: Bool = false
     @State static var viewModel: SpreadsheetViewModel = SpreadsheetViewModel()
     
     
     static var previews: some View {
-        SpreadsheetView(numberOfColumns: $numberOfColumns, numberOfRowsCalculated: $numberOfRowsCalculated, numberOfMeters: $numberOfMeters, selectedRodSize: $selectedRodSize, cellValues: $cellValues, firstRodSize: $firstRodSize, userEnteredValue: $userEnteredValue, isTableFullyCompleted: $isTableFullyCompleted, spreadsheetShowAlert: $spreadsheetShowAlert, viewModel: viewModel)
+        SpreadsheetView(numberOfColumns: $numberOfColumns, numberOfRowsCalculated: $numberOfRowsCalculated, numberOfMeters: $numberOfMeters, selectedRodSize: $selectedRodSize, cellValues: $cellValues, firstRodSize: $firstRodSize, userEnteredValue: $userEnteredValue, isTableFullyCompleted: $isTableFullyCompleted, spreadsheetShowAlert: $spreadsheetShowAlert, showGraph: $showGraph, viewModel: viewModel)
     }
 }
 
