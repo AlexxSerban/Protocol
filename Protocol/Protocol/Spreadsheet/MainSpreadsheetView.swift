@@ -45,28 +45,35 @@ struct MainSpreadsheetView: View {
     @State var isTableFullyCompleted: Bool = false
     @State var spreadsheetShowAlert: Bool = false
     @State var dataSpreadsheetShowAlert: Bool = false
+    @State var showGraph: Bool = false
     @State var cellValues: [[String]] = []
     @State var numberOfMeters = ""
     @State var selectedRodSize: RodSize = .halfMeter
     @State var firstRodSize: String = ""
     @State var userEnteredValue: String = ""
+    @State var columnValues: [Double] = []
     
     @ObservedObject var viewModel: SpreadsheetViewModel = SpreadsheetViewModel()
     
     var body: some View {
         VStack {
             if showSpreadsheet {
-                SpreadsheetView(numberOfColumns: $numberOfColumns,
-                                numberOfRowsCalculated: $numberOfRowsCalculated,
-                                numberOfMeters: $numberOfMeters,
-                                selectedRodSize: $selectedRodSize,
-                                cellValues: $cellValues,
-                                firstRodSize: $firstRodSize,
-                                userEnteredValue: $userEnteredValue,
-                                isTableFullyCompleted: $isTableFullyCompleted,
-                                spreadsheetShowAlert: $spreadsheetShowAlert,
-                                viewModel: viewModel
-                )
+                if showGraph {
+                    SpreadsheetGraphView(cellValues: $cellValues, numberOfRowsCalculated: $numberOfRowsCalculated)
+                } else {
+                    SpreadsheetView(numberOfColumns: $numberOfColumns,
+                                    numberOfRowsCalculated: $numberOfRowsCalculated,
+                                    numberOfMeters: $numberOfMeters,
+                                    selectedRodSize: $selectedRodSize,
+                                    cellValues: $cellValues,
+                                    firstRodSize: $firstRodSize,
+                                    userEnteredValue: $userEnteredValue,
+                                    isTableFullyCompleted: $isTableFullyCompleted,
+                                    spreadsheetShowAlert: $spreadsheetShowAlert, showGraph: $showGraph,
+                                    viewModel: viewModel
+                    )
+                }
+                
             } else {
                 DataSpreadsheetView(numberOfMeters: $numberOfMeters,
                                     selectedRodSize: $selectedRodSize,
