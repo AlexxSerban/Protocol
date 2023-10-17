@@ -4,11 +4,12 @@
 //
 //  Created by Alex Serban on 15.09.2023.
 //
+
 import SwiftUI
 
 struct ImageFullScreenView: View {
-    @Environment(\.presentationMode) var presentationMode
-    let image: UIImage
+    @Environment(\.presentationMode) var presentationMode // Environment property to manage presentation mode
+    let image: UIImage // The image to be displayed in fullscreen
 
     var body: some View {
         NavigationView {
@@ -32,8 +33,6 @@ struct ImageFullScreenView: View {
 
 struct ImageFullScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        ImageFullScreenView(image: UIImage(named: "example_image")!) 
+        ImageFullScreenView(image: UIImage(named: "example_image")!)
     }
 }
-
-

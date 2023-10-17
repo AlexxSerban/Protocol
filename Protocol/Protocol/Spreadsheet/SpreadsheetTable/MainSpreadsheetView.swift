@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Enumeration to represent different rod sizes
 enum RodSize: String, CaseIterable, Identifiable {
     case halfMeter = "0.5 meters"
     case meter128288 = "1.28288 meters"
@@ -18,6 +19,7 @@ enum RodSize: String, CaseIterable, Identifiable {
     
     var id: Self { self }
     
+    // A computed property to get the meters value for each rod size
     var metersValue: Float {
         switch self {
         case .halfMeter:
@@ -38,7 +40,9 @@ enum RodSize: String, CaseIterable, Identifiable {
     }
 }
 
+
 struct MainSpreadsheetView: View {
+    // State variables to control the spreadsheet view
     @State var numberOfColumns = 4
     @State var numberOfRowsCalculated: Int = 0
     @State var showSpreadsheet = false
@@ -52,39 +56,48 @@ struct MainSpreadsheetView: View {
     @State var firstRodSize: String = ""
     @State var userEnteredValue: String = ""
     @State var columnValues: [Double] = []
+    @State var xAxisValues: Int = 0
     
+    // ObservedObject for the SpreadsheetViewModel
     @ObservedObject var viewModel: SpreadsheetViewModel = SpreadsheetViewModel()
-    
+
     var body: some View {
         VStack {
             if showSpreadsheet {
                 if showGraph {
-                    SpreadsheetGraphView(cellValues: $cellValues, numberOfRowsCalculated: $numberOfRowsCalculated)
+                    // Display the SpreadsheetGraphView if showGraph is true
+                    SpreadsheetGraphView(cellValues: $cellValues, numberOfRowsCalculated: $numberOfRowsCalculated, xAxisValues: $xAxisValues)
                 } else {
-                    SpreadsheetView(numberOfColumns: $numberOfColumns,
-                                    numberOfRowsCalculated: $numberOfRowsCalculated,
-                                    numberOfMeters: $numberOfMeters,
-                                    selectedRodSize: $selectedRodSize,
-                                    cellValues: $cellValues,
-                                    firstRodSize: $firstRodSize,
-                                    userEnteredValue: $userEnteredValue,
-                                    isTableFullyCompleted: $isTableFullyCompleted,
-                                    spreadsheetShowAlert: $spreadsheetShowAlert, showGraph: $showGraph,
-                                    viewModel: viewModel
+                    // Display the SpreadsheetView if showGraph is false
+                    SpreadsheetView(
+                        numberOfColumns: $numberOfColumns,
+                        numberOfRowsCalculated: $numberOfRowsCalculated,
+                        numberOfMeters: $numberOfMeters,
+                        selectedRodSize: $selectedRodSize,
+                        cellValues: $cellValues,
+                        firstRodSize: $firstRodSize,
+                        userEnteredValue: $userEnteredValue,
+                        isTableFullyCompleted: $isTableFullyCompleted,
+                        spreadsheetShowAlert: $spreadsheetShowAlert,
+                        showGraph: $showGraph,
+                        viewModel: viewModel
                     )
                 }
-                
             } else {
-                DataSpreadsheetView(numberOfMeters: $numberOfMeters,
-                                    selectedRodSize: $selectedRodSize,
-                                    showSpreadsheet: $showSpreadsheet,
-                                    dataSpreadsheetShowAlert: $dataSpreadsheetShowAlert,
-                                    firstRodSize: $firstRodSize)
+                // Display the DataSpreadsheetView if showSpreadsheet is false
+                DataSpreadsheetView(
+                    numberOfMeters: $numberOfMeters,
+                    selectedRodSize: $selectedRodSize,
+                    showSpreadsheet: $showSpreadsheet,
+                    dataSpreadsheetShowAlert: $dataSpreadsheetShowAlert,
+                    firstRodSize: $firstRodSize
+                )
             }
         }
     }
 }
 
+// A preview block for testing the MainSpreadsheetView
 struct MainSpreadsheetView_Previews: PreviewProvider {
     static var previews: some View {
         MainSpreadsheetView()

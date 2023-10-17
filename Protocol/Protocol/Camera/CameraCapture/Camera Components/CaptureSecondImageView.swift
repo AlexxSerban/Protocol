@@ -1,48 +1,49 @@
 //
-//  CaptureFirstImageView.swift
+//  CaptureSecondImageView.swift
 //  Protocol
 //
 //  Created by Alex Serban on 14.09.2023.
 //
+
 import SwiftUI
 
-struct CaptureFirstImageView: View {
-    
-    @Binding var isShowingImagePicker: Bool
-    @Binding var selectedImage: UIImage?
-    @State private var isRemakeVisible = true
-    
-    @Binding var isFirstImageCaptured: Bool
-    @ObservedObject var viewModel: CameraCaptureModelView
-    @ObservedObject var locationManager: LocationManager
+// Define a SwiftUI view named CaptureSecondImageView
+struct CaptureSecondImageView: View {
+    @Binding var selectedImage: UIImage? // Store the selected image
+    @ObservedObject var viewModel: CameraCaptureModelView // The view model for capturing images
+    @ObservedObject var locationManager: LocationManager // The location manager
+    @Binding var isSecondImageCaptured: Bool // Track if the second image is captured
+    @Binding var isBothImagesCaptured: Bool // Track if both images are captured
+    @Binding var isShowingImagePicker: Bool // Control whether the image picker is displayed
+    @State private var isRemakeVisible = false // Control the visibility of the "Remake" button
     
     var body: some View {
         VStack(spacing: 16) {
             if selectedImage == nil {
+                // Display this view when no image is selected
                 withAnimation(.easeInOut(duration: 0.5)) {
-                    VStack(spacing: 16) {
+                    VStack{
                         VStack(spacing: 16) {
-                                Text("Location Details")
-                                    .font(.headline)
-                                    .foregroundColor(Color("Text"))
-                                    .padding()
-                                
-                                Text("Street: \(locationManager.locationData.street) \(locationManager.locationData.streetNumber)")
-                                Text("City: \(locationManager.locationData.postalCode) \(locationManager.locationData.city)")
-                                Text("Country: \(locationManager.locationData.country)")
-                                Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
-                            }
-                        
+                            Text("Location Details")
+                                .font(.headline)
+                                .foregroundColor(Color("Text"))
+                                .padding()
+                            
+                            Text("Street: \(locationManager.locationData.street) \(locationManager.locationData.streetNumber)")
+                            Text("City: \(locationManager.locationData.postalCode) \(locationManager.locationData.city)")
+                            Text("Country: \(locationManager.locationData.country)")
+                            Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
+                        }
                         Text("Open the camera to take a photo and obtain location details.")
                             .font(.callout)
                             .foregroundColor(Color("Text"))
                             .multilineTextAlignment(.leading)
                             .padding()
-                      
+                        
                         Button(action: {
                             isShowingImagePicker.toggle()
                         }) {
-                            Text("Capture First Image")
+                            Text("Capture Second Image")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
@@ -55,6 +56,7 @@ struct CaptureFirstImageView: View {
                 }
             }
             else {
+                // Display this view when an image is selected
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
                         Image(uiImage: selectedImage ?? UIImage(systemName: "photo")!)
@@ -65,7 +67,7 @@ struct CaptureFirstImageView: View {
                             .cornerRadius(15)
                             .shadow(radius: 5)
                         
-                        HStack(spacing: 16) {
+                        HStack (spacing: 16) {
                             Button(action: {
                                 isShowingImagePicker.toggle()
                             }) {
@@ -82,7 +84,8 @@ struct CaptureFirstImageView: View {
                                 if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
                                     viewModel.saveImageData(image: imageWithLocationDetails)
                                     selectedImage = nil
-                                    isFirstImageCaptured = true
+                                    isBothImagesCaptured = true
+                                    isSecondImageCaptured = true
                                     isRemakeVisible = false
                                 }
                             }) {
@@ -94,31 +97,24 @@ struct CaptureFirstImageView: View {
                                     .background(Color.green)
                                     .cornerRadius(10)
                             }
-                            .padding()
                         }
-                        
                     }
                 }
             }
         }
         .padding()
-        .onAppear {
-            locationManager.configureLocationData()
-        }
     }
 }
 
-struct CaptureFirstImageView_Previews: PreviewProvider {
+struct CaptureSecondImageView_Previews: PreviewProvider {
     static var previews: some View {
-        CaptureFirstImageView(
-            isShowingImagePicker: .constant(false),
+        CaptureSecondImageView(
             selectedImage: .constant(nil),
-            isFirstImageCaptured: .constant(false),
             viewModel: CameraCaptureModelView(),
-            locationManager: LocationManager()
+            locationManager: LocationManager(),
+            isSecondImageCaptured: .constant(false),
+            isBothImagesCaptured: .constant(false),
+            isShowingImagePicker: .constant(false)
         )
     }
 }
-
-
-

@@ -25,13 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 struct ProtocolApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var locationManager = LocationManager()
+    @StateObject var protocolData = ProtocolData.sharedData
     
     var body: some Scene {
         WindowGroup {
-//            CameraCaptureView()
-//                .environmentObject(locationManager)
-//            SpreadsheetView()
-            MainSpreadsheetView()
+            HomeView()
+                .environmentObject(locationManager)
+                .environmentObject(protocolData)
+            
+           
         }
     }
 }

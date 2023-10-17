@@ -1,25 +1,25 @@
 //
-//  DisplayBothImagesView.swift
+//  DisplayBothImagesExitView.swift
 //  Protocol
 //
-//  Created by Alex Serban on 14.09.2023.
+//  Created by Alex Serban on 16.10.2023.
 //
 
 import SwiftUI
 
-struct DisplayBothImagesView: View {
-    var viewModel: CameraCaptureModelView
-    
-    @State private var isImage1FullScreen = false
-    @State private var isImage2FullScreen = false 
+struct DisplayBothImagesExitView: View {
+    var viewModel: CameraCaptureModelView // The view model for managing captured images
+
+    @State private var isImage1FullScreen = false // Control fullscreen display for the first image
+    @State private var isImage2FullScreen = false // Control fullscreen display for the second image
+    @State private var toMainFirmSpreasheet = false // Control navigation to the MainFirmSpreadsheetView
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             withAnimation(.easeInOut(duration: 0.5)) {
                 VStack {
                     HStack {
-                        // Image 1
-                        Image(uiImage: viewModel.entryImagesData.firstImage ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: viewModel.model.firstEntryImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 200, height: 200)
                             .scaledToFill()
@@ -31,12 +31,11 @@ struct DisplayBothImagesView: View {
                             }
                             .fullScreenCover(isPresented: $isImage1FullScreen) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
-                                    ImageFullScreenView(image: viewModel.entryImagesData.firstImage ?? UIImage(systemName: "photo")!)
+                                    ImageFullScreenView(image: viewModel.model.firstEntryImage ?? UIImage(systemName: "photo")!)
                                 }
                             }
-                        
-                        // Image 2
-                        Image(uiImage: viewModel.entryImagesData.secondImage ?? UIImage(systemName: "photo")!)
+
+                        Image(uiImage: viewModel.model.secondEntryImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 200, height: 200)
                             .scaledToFill()
@@ -48,13 +47,14 @@ struct DisplayBothImagesView: View {
                             }
                             .fullScreenCover(isPresented: $isImage2FullScreen) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
-                                    ImageFullScreenView(image: viewModel.entryImagesData.secondImage ?? UIImage(systemName: "photo")!)
+                                    ImageFullScreenView(image: viewModel.model.secondEntryImage ?? UIImage(systemName: "photo")!)
                                 }
                             }
                     }
                     .padding(.horizontal)
-                    
+
                     Button(action: {
+                        toMainFirmSpreasheet.toggle()
                     }) {
                         Text("Next")
                             .font(.subheadline)
@@ -65,20 +65,22 @@ struct DisplayBothImagesView: View {
                             .cornerRadius(10)
                     }
                     .padding()
+
                 }
                 .navigationTitle("Images")
+            }
+
+            .navigationDestination(isPresented: $toMainFirmSpreasheet) {
+                MainFirmSpreadsheetView()
             }
         }
     }
 }
 
-struct DisplayBothImagesView_Previews: PreviewProvider {
+struct DisplayBothImagesExitView_Previews: PreviewProvider {
     static var previews: some View {
-        DisplayBothImagesView(
+        DisplayBothImagesExitView(
             viewModel: CameraCaptureModelView()
         )
     }
 }
-
-
-
