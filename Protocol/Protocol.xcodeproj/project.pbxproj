@@ -84,6 +84,13 @@
 			path = HomeView;
 			sourceTree = "<group>";
 		};
+		3E068E3C2ADECB270004B2D0 /* ProtocolPDF */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ProtocolPDF;
+			sourceTree = "<group>";
+		};
 		3E089E922AD45D0600C13B35 /* SpreadsheetTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +192,7 @@
 		3EC9C98C2AB0C67600B3480D /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				3E068E3C2ADECB270004B2D0 /* ProtocolPDF */,
 				3E068E342ADDAD100004B2D0 /* HomeView */,
 				3E089E972AD551A500C13B35 /* ProtocolData */,
 				3E1640052AB491F50058D1CA /* Spreadsheet */,

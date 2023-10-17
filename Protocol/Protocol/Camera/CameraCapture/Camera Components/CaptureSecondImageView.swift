@@ -34,7 +34,7 @@ struct CaptureSecondImageView: View {
                             Text("Country: \(locationManager.locationData.country)")
                             Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
                         }
-                        Text("Open the camera to take a photo and obtain location details.")
+                        Text("Open the camera to take the second photo and obtain location details.")
                             .font(.callout)
                             .foregroundColor(Color("Text"))
                             .multilineTextAlignment(.leading)
@@ -43,7 +43,7 @@ struct CaptureSecondImageView: View {
                         Button(action: {
                             isShowingImagePicker.toggle()
                         }) {
-                            Text("Capture Second Image")
+                            Text("Open the camera")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)

@@ -33,24 +33,19 @@ struct EntryImagesView: View {
                     CaptureFirstImageView(
                         isShowingImagePicker: $isShowingImagePicker,
                         selectedImage: $selectedImage,
-                        numerOfPhoto: $firstPhotoNumber,
-                        isBothImagesCaptured: $isBothImagesCaptured,
-                        isSecondImageCaptured: $isSecondImageCaptured,
-                        isFirstImageCaptured: $isBothImagesCaptured,
+                        isFirstImageCaptured: $isFirstImageCaptured,
                         viewModel: viewModel,
                         locationManager: locationManager
                     )
                 } else if !isSecondImageCaptured {
-                    // Display CaptureFirstImageView if the second image is not captured
-                    CaptureFirstImageView(
-                        isShowingImagePicker: $isShowingImagePicker,
+                    // Display CaptureSecondImageView if the second image is not captured
+                    CaptureSecondImageView(
                         selectedImage: $selectedImage,
-                        numerOfPhoto: $firstPhotoNumber,
-                        isBothImagesCaptured: $isBothImagesCaptured,
-                        isSecondImageCaptured: $isSecondImageCaptured,
-                        isFirstImageCaptured: $isBothImagesCaptured,
                         viewModel: viewModel,
-                        locationManager: locationManager
+                        locationManager: locationManager,
+                        isSecondImageCaptured: $isSecondImageCaptured,
+                        isBothImagesCaptured: $isBothImagesCaptured,
+                        isShowingImagePicker: $isShowingImagePicker
                     )
                 } else if isBothImagesCaptured {
                     // Display DisplayBothImagesView if both images are captured

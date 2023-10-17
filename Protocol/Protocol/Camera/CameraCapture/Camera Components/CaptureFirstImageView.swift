@@ -12,9 +12,6 @@ struct CaptureFirstImageView: View {
     @Binding var isShowingImagePicker: Bool // Control whether the image picker is displayed
     @Binding var selectedImage: UIImage? // Store the selected image
     @State private var isRemakeVisible = true // Control the visibility of the "Remake" button
-    @Binding var numerOfPhoto: String // Label for the photo (e.g., "First" or "Second")
-    @Binding var isBothImagesCaptured: Bool // Track if both images are captured
-    @Binding var isSecondImageCaptured: Bool // Track if the second image is captured
     @Binding var isFirstImageCaptured: Bool // Track if the first image is captured
     @ObservedObject var viewModel: CameraCaptureModelView // The view model for capturing images
     @ObservedObject var locationManager: LocationManager // The location manager
@@ -37,7 +34,7 @@ struct CaptureFirstImageView: View {
                             Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
                         }
                         
-                        Text("Open the camera to take the \(numerOfPhoto) photo and obtain location details.")
+                        Text("Open the camera to take the first photo and obtain location details.")
                             .font(.callout)
                             .foregroundColor(Color("Text"))
                             .multilineTextAlignment(.leading)
@@ -87,17 +84,9 @@ struct CaptureFirstImageView: View {
                                 if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
                                     viewModel.saveImageData(image: imageWithLocationDetails)
                                     selectedImage = nil
-                                    
+                                    isFirstImageCaptured = true
                                     isRemakeVisible = false
                                     print("The first photo has been taken")
-                                    isFirstImageCaptured = true
-                                    if viewModel.model.firstEntryImage != nil  {
-                                        isSecondImageCaptured = true
-                                        print("The second photo has been taken")
-                                    }
-                                    if viewModel.model.firstEntryImage != nil && viewModel.model.secondEntryImage != nil {
-                                        isBothImagesCaptured = true
-                                    }
                                 }
                             }) {
                                 Text("Save image")
@@ -126,9 +115,6 @@ struct CaptureFirstImageView_Previews: PreviewProvider {
         CaptureFirstImageView(
             isShowingImagePicker: .constant(false),
             selectedImage: .constant(nil),
-            numerOfPhoto: .constant("First"),
-            isBothImagesCaptured: .constant(false) ,
-            isSecondImageCaptured: .constant(false),
             isFirstImageCaptured: .constant(false),
             viewModel: CameraCaptureModelView(),
             locationManager: LocationManager()
