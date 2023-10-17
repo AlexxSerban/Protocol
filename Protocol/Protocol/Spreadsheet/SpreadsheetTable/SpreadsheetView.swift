@@ -10,6 +10,7 @@ import Foundation
 
 struct SpreadsheetView: View {
     
+    // Binding for various UI and data properties
     @Binding var numberOfColumns: Int
     @Binding var numberOfRowsCalculated: Int
     @Binding var numberOfMeters: String
@@ -37,6 +38,7 @@ struct SpreadsheetView: View {
                 }
                 .border(Color.black, width: 1)
                 
+                // Header row for the table
                 HStack(spacing: 0) {
                     Divider()
                     Text("Rod No.")
@@ -62,6 +64,7 @@ struct SpreadsheetView: View {
                 .background(Color.gray.opacity(0.5))
                 .border(Color.black, width: 1)
                 
+                // Loop to display table rows
                 ForEach(0..<numberOfRowsCalculated, id: \.self) { row in
                     HStack(spacing: 0) {
                         Rectangle()
@@ -83,57 +86,58 @@ struct SpreadsheetView: View {
                     }
                 }
                 .border(Color.black, width: 1)
-            }
-            
-            HStack(spacing: 16) {
-                TextField("Enter the number of meters for the last rod", text: $userEnteredValue)
-                    .frame(width: 350)
-                    .keyboardType(.numberPad)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10)
                 
-                Button(action: {
-                    if let enteredValue = Float(userEnteredValue) {
-                        let lastRow = numberOfRowsCalculated - 1
-                        let difference = Float(selectedRodSize.metersValue) - enteredValue
-                        cellValues[lastRow][0] = String(format: "%.2f", difference)
-                    }
-                }) {
-                    Text("Update")
+                HStack(spacing: 16) {
+                    // Input field to update the last rod length
+                    TextField("Enter the number of meters for the last rod", text: $userEnteredValue)
+                        .frame(width: 350)
+                        .keyboardType(.numbersAndPunctuation)
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
+                        .background(Color.gray.opacity(0.1))
                         .cornerRadius(10)
-                }
-                
-                Spacer()
-                
-                Button(action: {
-                    if viewModel.checkTableCompletion(numberOfRowsCalculated: numberOfRowsCalculated, numberOfColumns: numberOfColumns, cellValues: cellValues) {
-                        // Tabelul este complet
-                        showGraph = true
-                        print("Tabelul este complet. Execută acțiunea Next.")
-                    } else {
-                        // Tabelul nu este complet, arătați alerta
-                        spreadsheetShowAlert = true
+                    
+                    // Button to update the last rod length
+                    Button(action: {
+                        if let enteredValue = Float(userEnteredValue) {
+                            let lastRow = numberOfRowsCalculated - 1
+                            let difference = Float(selectedRodSize.metersValue) - enteredValue
+                            cellValues[lastRow][0] = String(format: "%.2f", difference)
+                        }
+                    }) {
+                        Text("Update")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                }) {
-                    Text("Next")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    
+                    Spacer()
+                    
+                    // Button to proceed to the next step
+                    Button(action: {
+                        if viewModel.checkTableCompletion(numberOfRowsCalculated: numberOfRowsCalculated, numberOfColumns: numberOfColumns, cellValues: cellValues) {
+                            showGraph = true
+                            print("Table is complete. Perform the Next action.")
+                        } else {
+                            spreadsheetShowAlert = true
+                        }
+                    }) {
+                        Text("Next")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    
                 }
-                
-            }
-            .padding()
-            .alert(isPresented: $spreadsheetShowAlert) {
-                Alert(
-                    title: Text("Incomplete Table"),
-                    message: Text("Please complete all fields in the table before proceeding."),
-                    dismissButton: .default(Text("OK"))
-                )
+                .padding()
+                .alert(isPresented: $spreadsheetShowAlert) {
+                    Alert(
+                        title: Text("Incomplete Table"),
+                        message: Text("Please complete all fields in the table before proceeding."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
             }
         }
         .padding()
@@ -167,14 +171,14 @@ struct SpreadsheetView: View {
                 }
                 
                 // Generate random values for column 1
-                    for row in 0..<numberOfRowsCalculated {
-                        cellValues[row][1] = String(format: "%.2f", generateRandomValue())
-                    }
+                for row in 0..<numberOfRowsCalculated {
+                    cellValues[row][1] = String(format: "%.2f", viewModel.generateRandomValue())
+                }
                 
                 // Generate increasing values for column 2
                 for row in 0..<numberOfRowsCalculated {
-                        cellValues[row][2] = String(format: "%.2f", generateIncreasingValues(forRow: row))
-                    }
+                    cellValues[row][2] = String(format: "%.2f", viewModel.generateIncreasingValues(forRow: row))
+                }
                 
                 // Add "first partial rod" to the last cell in the first row (in column with index 0).
                 if numberOfColumns > 0 {
@@ -186,27 +190,11 @@ struct SpreadsheetView: View {
                     cellValues[numberOfRowsCalculated - 1][numberOfColumns - 1] = "last partial rod"
                 }
             }
-            
-            // Display debug information in the console.
-            print("setupSpreadsheetData() called")
-            print("numberOfRowsCalculated: \(numberOfRowsCalculated)")
-            print("cellValues: \(cellValues)")
         }
     }
-    
-    func generateRandomValue() -> Float {
-        return Float.random(in: 90...210)
-    }
-    func generateIncreasingValues(forRow row: Int) -> Float {
-        // Calculează valoarea în funcție de rândul curent
-        let minValue: Float = -20.0
-        let step: Float = 0.8 // Ajustează pasul pentru a obține valori corespunzătoare
-        return minValue + Float(row) * step
-    }
-
-
 }
 
+// Preview for testing
 struct SpreadsheetView_Previews: PreviewProvider {
     @State static var selectedRodSize: RodSize = .halfMeter
     @State static var numberOfMeters: String = "100"
@@ -220,9 +208,7 @@ struct SpreadsheetView_Previews: PreviewProvider {
     @State static var showGraph: Bool = false
     @State static var viewModel: SpreadsheetViewModel = SpreadsheetViewModel()
     
-    
     static var previews: some View {
         SpreadsheetView(numberOfColumns: $numberOfColumns, numberOfRowsCalculated: $numberOfRowsCalculated, numberOfMeters: $numberOfMeters, selectedRodSize: $selectedRodSize, cellValues: $cellValues, firstRodSize: $firstRodSize, userEnteredValue: $userEnteredValue, isTableFullyCompleted: $isTableFullyCompleted, spreadsheetShowAlert: $spreadsheetShowAlert, showGraph: $showGraph, viewModel: viewModel)
     }
 }
-

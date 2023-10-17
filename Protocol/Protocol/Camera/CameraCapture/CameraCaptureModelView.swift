@@ -11,7 +11,8 @@ import UIKit
 
 class CameraCaptureModelView: ObservableObject {
     
-    @Published var entryImagesData = EntryImagesData()
+    @Published var model: ProtocolData = ProtocolData()
+
     
     func addLocationDetailsToImage(_ image: UIImage, locationData: LocationData) -> UIImage? {
         // Create a graphics context
@@ -73,10 +74,17 @@ class CameraCaptureModelView: ObservableObject {
     }
     
     func saveImageData(image: UIImage) {
-        if entryImagesData.firstImage == nil {
-            entryImagesData.firstImage = image
-        } else if entryImagesData.secondImage == nil {
-            entryImagesData.secondImage = image
+        if model.firstEntryImage == nil {
+            model.firstEntryImage = image
+        } 
+        else if model.secondEntryImage == nil {
+            model.secondEntryImage = image
+        } 
+        else if model.firstExitImage == nil {
+            model.firstExitImage = image
+        } 
+        else if model.secondExitImage == nil {
+            model.secondExitImage = image
         }
     }
 }
