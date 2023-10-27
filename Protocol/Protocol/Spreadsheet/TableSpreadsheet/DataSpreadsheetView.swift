@@ -9,12 +9,7 @@ import SwiftUI
 
 struct DataSpreadsheetView: View {
     
-    // Bindings to external data
-    @Binding var numberOfMeters: String
-    @Binding var selectedRodSize: RodSize
-    @Binding var showSpreadsheet: Bool
-    @Binding var dataSpreadsheetShowAlert: Bool
-    @Binding var firstRodSize: String
+    @State var viewModel: SpreadsheetViewModel
     
     var body: some View {
         VStack(spacing: 50) {
@@ -24,7 +19,7 @@ struct DataSpreadsheetView: View {
                     .font(.headline)
                     .multilineTextAlignment(.center)
                 
-                TextField("Enter the number of meters", text: $numberOfMeters)
+                TextField("Enter the number of meters", text: $viewModel.protocolData.numberOfMeters)
                     .frame(width: 350)
                     .keyboardType(.numberPad)
                     .padding()
@@ -38,7 +33,7 @@ struct DataSpreadsheetView: View {
                     .font(.headline)
                     .multilineTextAlignment(.center)
                 
-                TextField("Enter the size of the first rod", text: $firstRodSize)
+                TextField("Enter the size of the first rod", text: $viewModel.protocolData.firstRodSize)
                     .frame(width: 350)
                     .keyboardType(.numbersAndPunctuation)
                     .padding()
@@ -52,7 +47,7 @@ struct DataSpreadsheetView: View {
                     .font(.headline)
                     .multilineTextAlignment(.center)
                 
-                Picker("Rod Size", selection: $selectedRodSize) {
+                Picker("Rod Size", selection: $viewModel.protocolData.selectedRodSize) {
                     ForEach(RodSize.allCases, id: \.self) { size in
                         Text(size.rawValue)
                             .tag(size)
@@ -64,11 +59,11 @@ struct DataSpreadsheetView: View {
             
             // Button to proceed
             Button(action: {
-                if !numberOfMeters.isEmpty && !firstRodSize.isEmpty {
-                    showSpreadsheet = true
+                if !viewModel.protocolData.numberOfMeters.isEmpty && !viewModel.protocolData.firstRodSize.isEmpty {
+                    viewModel.showSpreadsheet = true
                 }
                 else {
-                    dataSpreadsheetShowAlert = true
+                    viewModel.dataSpreadsheetShowAlert = true
                 }
             }) {
                 Text("Next")
@@ -79,7 +74,7 @@ struct DataSpreadsheetView: View {
             }
             
             // Alert for incomplete data
-            .alert(isPresented: $dataSpreadsheetShowAlert) {
+            .alert(isPresented: $viewModel.dataSpreadsheetShowAlert) {
                 Alert(
                     title: Text("Attention"),
                     message: Text("Please enter both the number of meters and the size of the first rod."),
@@ -93,13 +88,8 @@ struct DataSpreadsheetView: View {
 
 // Preview for testing
 struct DataSpreadsheetView_Previews: PreviewProvider {
-    @State static var numberOfMeters: String = ""
-    @State static var firstRodSize: String = ""
-    @State static var selectedRodSize: RodSize = .meter128288
-    @State static var showSpreadsheet: Bool = false
-    @State static var dataSpreadsheetShowAlert: Bool = false
     
     static var previews: some View {
-        DataSpreadsheetView(numberOfMeters: $numberOfMeters, selectedRodSize: $selectedRodSize, showSpreadsheet: $showSpreadsheet, dataSpreadsheetShowAlert: $dataSpreadsheetShowAlert, firstRodSize: $firstRodSize)
+        DataSpreadsheetView(viewModel: SpreadsheetViewModel())
     }
 }

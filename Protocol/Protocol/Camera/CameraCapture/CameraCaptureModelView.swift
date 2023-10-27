@@ -73,16 +73,18 @@ class CameraCaptureModelView: ObservableObject {
         return editedImage
     }
     
-    func saveImageData(image: UIImage) {
+    func saveImageData(image: UIImage, locationManager: LocationManager) {
         if model.firstEntryImage == nil {
             model.firstEntryImage = image
-        } 
+            model.entryPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
+        }
         else if model.secondEntryImage == nil {
             model.secondEntryImage = image
         } 
         else if model.firstExitImage == nil {
             model.firstExitImage = image
-        } 
+            model.exitPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
+        }
         else if model.secondExitImage == nil {
             model.secondExitImage = image
         }

@@ -16,8 +16,7 @@ struct ExitImagesView: View {
 
     // Data
     @State private var selectedImage: UIImage? // Store the selected image
-    @State private var firstPhotoNumber: String = "First" // Label for the first photo
-    @State private var secondPhotoNumber: String = "Second" // Label for the second photo
+    @State private var exitPhotos: String = "exit."
 
     // Status
     @State private var isShowingImagePicker = false // Control whether the image picker is displayed
@@ -35,7 +34,8 @@ struct ExitImagesView: View {
                         selectedImage: $selectedImage,
                         isFirstImageCaptured: $isFirstImageCaptured,
                         viewModel: viewModel,
-                        locationManager: locationManager
+                        locationManager: locationManager,
+                        entryOrExitType: $exitPhotos
                     )
                 } else if !isSecondImageCaptured {
                     // Display CaptureSecondImageView if the second image is not captured
@@ -45,7 +45,8 @@ struct ExitImagesView: View {
                         locationManager: locationManager,
                         isSecondImageCaptured: $isSecondImageCaptured,
                         isBothImagesCaptured: $isBothImagesCaptured,
-                        isShowingImagePicker: $isShowingImagePicker
+                        isShowingImagePicker: $isShowingImagePicker,
+                        entryOrExitType: $exitPhotos
                     )
                 } else if isBothImagesCaptured {
                     // Display DisplayBothImagesExitView if both images are captured

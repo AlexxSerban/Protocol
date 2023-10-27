@@ -16,8 +16,8 @@ struct EntryImagesView: View {
 
     // Data
     @State private var selectedImage: UIImage? // Store the selected image
-    @State private var firstPhotoNumber: String = "First" // Label for the first photo
-    @State private var secondPhotoNumber: String = "Second" // Label for the second photo
+    
+    @State private var entryPhotos: String = "entry." // Label for the first photo
 
     // Status
     @State private var isShowingImagePicker = false // Control whether the image picker is displayed
@@ -35,7 +35,7 @@ struct EntryImagesView: View {
                         selectedImage: $selectedImage,
                         isFirstImageCaptured: $isFirstImageCaptured,
                         viewModel: viewModel,
-                        locationManager: locationManager
+                        locationManager: locationManager, entryOrExitType: $entryPhotos
                     )
                 } else if !isSecondImageCaptured {
                     // Display CaptureSecondImageView if the second image is not captured
@@ -45,7 +45,8 @@ struct EntryImagesView: View {
                         locationManager: locationManager,
                         isSecondImageCaptured: $isSecondImageCaptured,
                         isBothImagesCaptured: $isBothImagesCaptured,
-                        isShowingImagePicker: $isShowingImagePicker
+                        isShowingImagePicker: $isShowingImagePicker,
+                        entryOrExitType: $entryPhotos
                     )
                 } else if isBothImagesCaptured {
                     // Display DisplayBothImagesView if both images are captured
@@ -63,5 +64,6 @@ struct EntryImagesView: View {
 struct EntryImagesView_Previews: PreviewProvider {
     static var previews: some View {
         EntryImagesView()
+            .environmentObject(LocationManager())
     }
 }
