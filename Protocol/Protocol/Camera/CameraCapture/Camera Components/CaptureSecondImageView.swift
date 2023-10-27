@@ -16,6 +16,7 @@ struct CaptureSecondImageView: View {
     @Binding var isBothImagesCaptured: Bool // Track if both images are captured
     @Binding var isShowingImagePicker: Bool // Control whether the image picker is displayed
     @State private var isRemakeVisible = false // Control the visibility of the "Remake" button
+    @Binding var entryOrExitType: String
     
     var body: some View {
         VStack(spacing: 16) {
@@ -34,7 +35,7 @@ struct CaptureSecondImageView: View {
                             Text("Country: \(locationManager.locationData.country)")
                             Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
                         }
-                        Text("Open the camera to take the second photo and obtain location details.")
+                        Text("Open the camera to take the second photo for " + entryOrExitType)
                             .font(.callout)
                             .foregroundColor(Color("Text"))
                             .multilineTextAlignment(.leading)
@@ -43,7 +44,7 @@ struct CaptureSecondImageView: View {
                         Button(action: {
                             isShowingImagePicker.toggle()
                         }) {
-                            Text("Open the camera")
+                            Text("Camera")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
@@ -82,7 +83,7 @@ struct CaptureSecondImageView: View {
                             
                             Button(action: {
                                 if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
-                                    viewModel.saveImageData(image: imageWithLocationDetails)
+                                    viewModel.saveImageData(image: imageWithLocationDetails, locationManager: locationManager)
                                     selectedImage = nil
                                     isBothImagesCaptured = true
                                     isSecondImageCaptured = true
@@ -114,7 +115,8 @@ struct CaptureSecondImageView_Previews: PreviewProvider {
             locationManager: LocationManager(),
             isSecondImageCaptured: .constant(false),
             isBothImagesCaptured: .constant(false),
-            isShowingImagePicker: .constant(false)
+            isShowingImagePicker: .constant(false),
+            entryOrExitType: .constant("Exit")
         )
     }
 }

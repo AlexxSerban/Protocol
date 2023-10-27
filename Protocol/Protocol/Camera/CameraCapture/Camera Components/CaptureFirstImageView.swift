@@ -15,6 +15,7 @@ struct CaptureFirstImageView: View {
     @Binding var isFirstImageCaptured: Bool // Track if the first image is captured
     @ObservedObject var viewModel: CameraCaptureModelView // The view model for capturing images
     @ObservedObject var locationManager: LocationManager // The location manager
+    @Binding var entryOrExitType: String
     
     var body: some View {
         VStack(spacing: 16) {
@@ -23,6 +24,14 @@ struct CaptureFirstImageView: View {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
                         VStack(spacing: 16) {
+                            
+                            Text("Open the camera to take the first photo for " + entryOrExitType)
+                                .font(.callout)
+                                .foregroundColor(Color("Text"))
+                                .multilineTextAlignment(.leading)
+                                .padding()
+                            
+                            
                             Text("Location Details")
                                 .font(.headline)
                                 .foregroundColor(Color("Text"))
@@ -34,16 +43,12 @@ struct CaptureFirstImageView: View {
                             Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
                         }
                         
-                        Text("Open the camera to take the first photo and obtain location details.")
-                            .font(.callout)
-                            .foregroundColor(Color("Text"))
-                            .multilineTextAlignment(.leading)
-                            .padding()
+                        
                       
                         Button(action: {
                             isShowingImagePicker.toggle()
                         }) {
-                            Text("Open the camera")
+                            Text("Camera")
                                 .font(.subheadline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
@@ -82,7 +87,7 @@ struct CaptureFirstImageView: View {
                             
                             Button(action: {
                                 if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
-                                    viewModel.saveImageData(image: imageWithLocationDetails)
+                                    viewModel.saveImageData(image: imageWithLocationDetails, locationManager: locationManager)
                                     selectedImage = nil
                                     isFirstImageCaptured = true
                                     isRemakeVisible = false
@@ -117,7 +122,8 @@ struct CaptureFirstImageView_Previews: PreviewProvider {
             selectedImage: .constant(nil),
             isFirstImageCaptured: .constant(false),
             viewModel: CameraCaptureModelView(),
-            locationManager: LocationManager()
+            locationManager: LocationManager(),
+            entryOrExitType: .constant("Exit")
         )
     }
 }

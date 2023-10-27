@@ -71,7 +71,7 @@ struct DisplayBothImagesExitView: View {
             }
 
             .navigationDestination(isPresented: $toMainFirmSpreasheet) {
-                MainFirmSpreadsheetView()
+                MainHeaderSpreadsheetView()
             }
         }
     }

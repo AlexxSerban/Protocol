@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     @StateObject var locationManager = LocationManager()
 
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         return true
@@ -25,15 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 struct ProtocolApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var locationManager = LocationManager()
-    @StateObject var protocolData = ProtocolData.sharedData
+
     
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .environmentObject(locationManager)
-                .environmentObject(protocolData)
-            
-           
         }
     }
 }

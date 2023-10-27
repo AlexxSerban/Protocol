@@ -14,6 +14,7 @@ struct HomeView: View {
         
         NavigationStack {
             VStack {
+                
                 Spacer()
                 
                 Text("Welcome!")
