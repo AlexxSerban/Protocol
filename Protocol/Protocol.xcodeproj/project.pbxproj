@@ -495,7 +495,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Protocol/Preview Content\"";
-				DEVELOPMENT_TEAM = 7D837Q8LBZ;
+				DEVELOPMENT_TEAM = YW564B49MR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Protocol Need Camera to Take Photos Within The App";
@@ -529,7 +529,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Protocol/Preview Content\"";
-				DEVELOPMENT_TEAM = 7D837Q8LBZ;
+				DEVELOPMENT_TEAM = YW564B49MR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Protocol Need Camera to Take Photos Within The App";

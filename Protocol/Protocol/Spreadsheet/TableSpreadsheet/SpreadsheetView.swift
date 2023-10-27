@@ -70,6 +70,7 @@ struct SpreadsheetView: View {
 
 // Preview for testing
 struct SpreadsheetView_Previews: PreviewProvider {
+    
     @State static var viewModel: SpreadsheetViewModel = SpreadsheetViewModel()
     
     static var previews: some View {

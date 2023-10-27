@@ -9,12 +9,11 @@ import SwiftUI
 
 struct HeaderSpreadsheetView: View {
     
-    @State var viewModel: HeaderSpreadsheetViewModel
+    @State var viewModel = HeaderSpreadsheetViewModel()
 
     var body: some View {
-        NavigationStack {
             VStack(spacing: 30) {
-                List {
+                VStack {
                     // Header of the spreadsheet
                     HStack(spacing: 0) {
                         Image("IconTechnoskopic")
@@ -91,10 +90,7 @@ struct HeaderSpreadsheetView: View {
                 }
             }
             
-        }
-        .navigationDestination(isPresented: $viewModel.isDataComplete, destination: {
-            ProtocolPDFView()
-        })
+        
         
     }
 }
@@ -102,7 +98,7 @@ struct HeaderSpreadsheetView: View {
 struct FirmSpreadsheetView_Previews: PreviewProvider {
     
     static var previews: some View {
-        return HeaderSpreadsheetView(viewModel: HeaderSpreadsheetViewModel())
+        return HeaderSpreadsheetView()
     }
 }
 
