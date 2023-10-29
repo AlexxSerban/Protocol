@@ -21,6 +21,7 @@ class ProtocolData {
     var area: String = ""
     var street: String = ""
     var pipeBundle: String = ""
+    var totalPipes: String = ""
     var drillLength: String = ""
     var pilotOperator: String = ""
     var drillingRigOperator: String = ""

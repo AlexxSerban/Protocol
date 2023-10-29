@@ -20,12 +20,13 @@ class ProtocolPDFViewModel {
     //Work Through Use @StateObject Instead
     var PDFUrl: URL?
     var showShareSheet: Bool = false
+    var nextToEmail: Bool = false
     var generatedImage: Image?
     
     
     @MainActor
     func render<Content: View>(_ content: Content) -> URL {
-        let renderedUrl = URL.documentsDirectory.appending(path: "output.pdf")
+        let renderedUrl = URL.documentsDirectory.appending(path: "PDF\(UUID().uuidString).pdf")
         
         if let consumer = CGDataConsumer(url: renderedUrl as CFURL),
            let pdfContext = CGContext(consumer: consumer, mediaBox: nil, nil) {

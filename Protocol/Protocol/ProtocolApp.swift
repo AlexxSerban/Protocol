@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     @StateObject var locationManager = LocationManager()
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         return true
@@ -32,6 +31,10 @@ struct ProtocolApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(locationManager)
+//            ProtocolPDFView()
+//            MainSpreadsheetView()
+//                .environmentObject(locationManager)
+
         }
     }
 }

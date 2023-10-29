@@ -15,14 +15,11 @@ struct MainSpreadsheetView: View {
         VStack {
             if viewModel.showSpreadsheet {
                 if viewModel.showGraph {
-                    // Display the SpreadsheetGraphView if showGraph is true
-                    SpreadsheetGraphView(viewModel: viewModelGraph)
+                    SpreadsheetGraphView()
                 } else {
-                    // Display the SpreadsheetView if showGraph is false
                     SpreadsheetView(viewModel: viewModel)
                 }
             } else {
-                // Display the DataSpreadsheetView if showSpreadsheet is false
                 DataSpreadsheetView(viewModel: viewModel)
             }
         }

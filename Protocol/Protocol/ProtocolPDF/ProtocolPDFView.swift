@@ -16,24 +16,48 @@ struct ProtocolPDFView: View {
     
     
     var body: some View {
-        VStack {
-            VStack{
-                HeaderSpreadsheetView()
-                    .frame(maxHeight: .infinity)
-                
-                TableSpreadsheetView(viewModel: viewModelSpreadsheet)
-                    .frame(maxHeight: .infinity)
-                
-//                GraphView(viewModel: viewModelGraph)
-//                    .frame(maxHeight: .infinity)
-            }
+        NavigationStack {
+            ScrollView {
+                VStack{
+                    PDFView()
+                }
 
-            Button {
-                _ = viewModel.render(self)
-            } label: {
-                Label("Hehe", systemImage: "figure.core.training")
+                HStack {
+                    Button {
+                        exportPDF {
+                            PDFView()
+                        } completion: { status, url in
+                            if let url = url, status {
+                                viewModel.PDFUrl = url
+                                viewModel.showShareSheet.toggle()
+                            }
+                            else {
+                                print("Failed to produce PDF")
+                            }
+                        }
+                    } label: {
+                        Text("Save PDF")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    
+                    Spacer()
+                    
+                    Button {
+                        viewModel.nextToEmail.toggle()
+                    } label: {
+                        Text("Next")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    
+                }
+                .padding()
             }
-
         }
         .padding()
         .sheet(isPresented: $viewModel.showShareSheet) {
@@ -42,6 +66,9 @@ struct ProtocolPDFView: View {
             if let PDFUrl = viewModel.PDFUrl {
                 ShareSheet(urls: [PDFUrl])
             }
+        }
+        .navigationDestination(isPresented: $viewModel.nextToEmail) {
+            //Add the next View
         }
     }
 }

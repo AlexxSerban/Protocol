@@ -10,20 +10,9 @@ import Charts
 
 struct GraphView: View {
     
-    @State var viewModel: GraphViewModel
-    
-    // A computed property to sort cell values based on depth (column 1)
-    var sortedCellValues: [[String]] {
-        return viewModel.protocolData.cellValuesString.sorted { $0[1] < $1[1] }
-    }
-    
-    // Total number of rows
-    var totalRows: Int {
-        return viewModel.protocolData.cellValuesString.count
-    }
+    @State var viewModel: GraphViewModel = GraphViewModel()
     
     var body: some View {
-        NavigationStack {
             VStack {
                 Text("Line Chart")
                     .font(.title)
@@ -32,7 +21,7 @@ struct GraphView: View {
                 VStack {
                     Chart {
                         // Create LineMark and PointMark elements for each data point
-                        ForEach(0..<totalRows, id: \.self) { index in
+                        ForEach(0..<viewModel.totalRows, id: \.self) { index in
                             LineMark(
                                 x: .value("Rod (Nr.)", index.advanced(by: 1)),
                                 y: .value("Depth (cm)", Double(viewModel.protocolData.cellValuesString[index][1]) ?? 0.0)
@@ -59,7 +48,6 @@ struct GraphView: View {
                 }
                 .padding()
             }
-        }
         .onAppear {
             viewModel.updateXAxisValues()
         }
@@ -71,6 +59,6 @@ struct GraphView: View {
 struct GraphView_Previews: PreviewProvider {
     
     static var previews: some View {
-        GraphView(viewModel: GraphViewModel())
+        GraphView()
     }
 }
