@@ -40,6 +40,7 @@
 		3EE1394F2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1394E2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift */; };
 		3EE139512ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE139502ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift */; };
 		3EE139542AE66E7800B4C6B4 /* TableSpreadsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE139532AE66E7800B4C6B4 /* TableSpreadsheetView.swift */; };
+		3EFA041B2AED564200290D32 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041A2AED564200290D32 /* PDFView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		3EE1394E2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolPDFView.swift; sourceTree = "<group>"; };
 		3EE139502ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolPDFViewModel.swift; sourceTree = "<group>"; };
 		3EE139532AE66E7800B4C6B4 /* TableSpreadsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSpreadsheetView.swift; sourceTree = "<group>"; };
+		3EFA041A2AED564200290D32 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				3EE1394E2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift */,
 				3EE139502ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift */,
 				3E88174F2AE713FD00E0A83C /* Extensions.swift */,
+				3EFA041A2AED564200290D32 /* PDFView.swift */,
 			);
 			path = ProtocolPDF;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				3E8817502AE713FD00E0A83C /* Extensions.swift in Sources */,
 				3EC9C9902AB0C67600B3480D /* ContentView.swift in Sources */,
 				3EC9C98E2AB0C67600B3480D /* ProtocolApp.swift in Sources */,
+				3EFA041B2AED564200290D32 /* PDFView.swift in Sources */,
 				3EE073342AD9397200D7BDCB /* HomeView.swift in Sources */,
 				3E1640072AB492080058D1CA /* SpreadsheetView.swift in Sources */,
 			);
@@ -499,6 +503,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Protocol Need Camera to Take Photos Within The App";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In order to create a custom photo with the location details";
@@ -533,6 +539,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Protocol Need Camera to Take Photos Within The App";
+				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In order to create a custom photo with the location details";
