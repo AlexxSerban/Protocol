@@ -27,17 +27,18 @@ class HeaderSpreadsheetViewModel {
             protocolData.cellValues[row][0].text = protocolData.firstColumn[row]
             protocolData.cellValues[row][1].text = ""
         }
-
+        
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Constructor") ?? 0][1].text = protocolData.constructor
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yy"
         let dateString = dateFormatter.string(from: protocolData.currentDate)
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Date (dd/mm/yy)") ?? 1][1].text = dateString
-
+        
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Week-shot") ?? 2][1].text = protocolData.weekshot
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Area") ?? 3][1].text = protocolData.area
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Street") ?? 4][1].text = protocolData.street
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Pipe bundle") ?? 5][1].text = protocolData.pipeBundle
+        protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Total pipes") ?? 6][1].text = protocolData.totalPipes
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Drill length") ?? 7][1].text = protocolData.drillLength
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Pilot operator") ?? 8][1].text = protocolData.pilotOperator
         protocolData.cellValues[protocolData.firstColumn.firstIndex(of: "Drilling rig operator") ?? 9][1].text = protocolData.drillingRigOperator
@@ -65,12 +66,8 @@ class HeaderSpreadsheetViewModel {
             !protocolData.cellValues[13][0].text.isEmpty &&
             
             protocolData.contractorSignature != nil {
-            
-            // Toggle a boolean to proceed to the next step
             isDataComplete.toggle()
-            
         } else {
-            // Present an alert if the data is incomplete
             isAlertPresented.toggle()
         }
     }
@@ -80,6 +77,8 @@ class HeaderSpreadsheetViewModel {
             !protocolData.weekshot.isEmpty &&
             !protocolData.drillLength.isEmpty &&
             !protocolData.pilotOperator.isEmpty &&
+            !protocolData.pipeBundle.isEmpty &&
+            !protocolData.totalPipes.isEmpty &&
             !protocolData.drillingRigOperator.isEmpty &&
             !protocolData.supervisor.isEmpty &&
             protocolData.contractorSignature != nil

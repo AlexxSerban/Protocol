@@ -50,6 +50,8 @@ class ProtocolData {
     var secondExitImage: UIImage? // Second exit image
     var contractorSignature: UIImage? // Contractor's signature
     
+    var pdfFileURL: URL?
+    
     // Define an array of strings for the first column of the spreadsheet
     var firstColumn = ["Constructor", "Date (dd/mm/yy)", "Week-shot", "Area", "Street", "Pipe bundle", "Total number of pipes", "Drill length", "Pilot operator", "Drilling rig operator", "Supervisor", "Entry pit coordinates", "Exit pit coordinates", "Contractor signature"]
     

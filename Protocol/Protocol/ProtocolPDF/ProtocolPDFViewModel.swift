@@ -23,31 +23,34 @@ class ProtocolPDFViewModel {
     var nextToEmail: Bool = false
     var generatedImage: Image?
     
-    
     @MainActor
-    func render<Content: View>(_ content: Content) -> URL {
-        let renderedUrl = URL.documentsDirectory.appending(path: "PDF\(UUID().uuidString).pdf")
+    func exportPDF() {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         
-        if let consumer = CGDataConsumer(url: renderedUrl as CFURL),
-           let pdfContext = CGContext(consumer: consumer, mediaBox: nil, nil) {
-            
-            let renderer = ImageRenderer(content: content)
-            renderer.render { size, renderer in
-                let options: [CFString: Any] = [
-                    kCGPDFContextMediaBox: CGRect(origin: .zero, size: size)
-                ]
-                
-                pdfContext.beginPDFPage(options as CFDictionary)
-                
-                renderer(pdfContext)
-                pdfContext.endPDFPage()
-                pdfContext.closePDF()
-            }
+        let renderedUrl = documentDirectory.appending(path: "Protocol-\(Date())-\(protocolData.weekshot).pdf")
+        
+            let renderer = ImageRenderer(content: ProtocolView())
+            renderer.scale = UIScreen.main.scale
+                        renderer.render { size, renderer in
+                            var mediaBox = CGRect(origin: .zero,
+                                                  size: CGSize(width: size.width + 100, height: size.height + 100))
+                            guard let consumer = CGDataConsumer(url: renderedUrl as CFURL),
+                                  let pdfContext =  CGContext(consumer: consumer,
+                                                              mediaBox: &mediaBox, nil)
+                            else {
+                                return
+                            }
+                            pdfContext.beginPDFPage(nil)
+                            pdfContext.translateBy(x: mediaBox.size.width / 2 - size.width / 2,
+                                                   y: mediaBox.size.height / 2 - size.height / 2)
+                            renderer(pdfContext)
+                            pdfContext.endPDFPage()
+                            pdfContext.closePDF()
+                        
         }
-        
+        protocolData.pdfFileURL = renderedUrl
+        showShareSheet.toggle()
         print("Saving PDF to \(renderedUrl.path())")
-        
-        return renderedUrl
     }
     
 }

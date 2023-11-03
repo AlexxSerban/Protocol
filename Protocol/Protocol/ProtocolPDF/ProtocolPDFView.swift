@@ -11,30 +11,20 @@ import PDFKit
 
 struct ProtocolPDFView: View {
     @State var viewModel = ProtocolPDFViewModel()
-    @State var viewModelSpreadsheet = SpreadsheetViewModel()
-    @State var viewModelGraph = GraphViewModel()
-    
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
+        ScrollView {
+            VStack {
                 VStack{
-                    PDFView()
+                    ProtocolView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-
+                .padding()
+                
                 HStack {
                     Button {
-                        exportPDF {
-                            PDFView()
-                        } completion: { status, url in
-                            if let url = url, status {
-                                viewModel.PDFUrl = url
-                                viewModel.showShareSheet.toggle()
-                            }
-                            else {
-                                print("Failed to produce PDF")
-                            }
-                        }
+                        viewModel.exportPDF()
+
                     } label: {
                         Text("Save PDF")
                             .padding()
@@ -56,20 +46,20 @@ struct ProtocolPDFView: View {
                     }
                     
                 }
-                .padding()
             }
         }
         .padding()
         .sheet(isPresented: $viewModel.showShareSheet) {
             viewModel.PDFUrl = nil
         } content: {
-            if let PDFUrl = viewModel.PDFUrl {
+            if let PDFUrl = viewModel.protocolData.pdfFileURL {
                 ShareSheet(urls: [PDFUrl])
             }
         }
         .navigationDestination(isPresented: $viewModel.nextToEmail) {
-            //Add the next View
+            EmailView()
         }
+        
     }
 }
 

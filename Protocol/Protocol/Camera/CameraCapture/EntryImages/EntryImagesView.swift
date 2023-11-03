@@ -11,52 +11,31 @@ import CoreLocationUI
 
 struct EntryImagesView: View {
 
-    @EnvironmentObject var locationManager: LocationManager // Access the LocationManager through the environment
-    @StateObject var viewModel = CameraCaptureModelView() // Create an instance of CameraCaptureModelView
-
-    // Data
-    @State private var selectedImage: UIImage? // Store the selected image
-    
-    @State private var entryPhotos: String = "entry." // Label for the first photo
-
-    // Status
-    @State private var isShowingImagePicker = false // Control whether the image picker is displayed
-    @State private var isFirstImageCaptured = false // Track if the first image is captured
-    @State private var isSecondImageCaptured = false // Track if the second image is captured
-    @State private var isBothImagesCaptured = false // Track if both images are captured
+    @EnvironmentObject var locationManager: LocationManager
+    @State var viewModel = CameraCaptureModelView()
 
     var body: some View {
         withAnimation(.easeInOut(duration: 0.5)) {
             VStack {
-                if !isFirstImageCaptured {
-                    // Display CaptureFirstImageView if the first image is not captured
+                if !viewModel.isFirstImageCaptured {
                     CaptureFirstImageView(
-                        isShowingImagePicker: $isShowingImagePicker,
-                        selectedImage: $selectedImage,
-                        isFirstImageCaptured: $isFirstImageCaptured,
-                        viewModel: viewModel,
-                        locationManager: locationManager, entryOrExitType: $entryPhotos
-                    )
-                } else if !isSecondImageCaptured {
-                    // Display CaptureSecondImageView if the second image is not captured
-                    CaptureSecondImageView(
-                        selectedImage: $selectedImage,
                         viewModel: viewModel,
                         locationManager: locationManager,
-                        isSecondImageCaptured: $isSecondImageCaptured,
-                        isBothImagesCaptured: $isBothImagesCaptured,
-                        isShowingImagePicker: $isShowingImagePicker,
-                        entryOrExitType: $entryPhotos
+                        entryOrExitType: viewModel.entryPhotos
                     )
-                } else if isBothImagesCaptured {
-                    // Display DisplayBothImagesView if both images are captured
+                } else if !viewModel.isSecondImageCaptured {
+                    CaptureSecondImageView(
+                        viewModel: viewModel,
+                        locationManager: locationManager,
+                        entryOrExitType: viewModel.entryPhotos
+                    )
+                } else if viewModel.isBothImagesCaptured {
                     DisplayBothImagesView(viewModel: viewModel)
                 }
             }
         }
-        .sheet(isPresented: $isShowingImagePicker) {
-            // Present the ImagePickerView as a sheet
-            ImagePickerView(selectedImage: $selectedImage, isPresented: $isShowingImagePicker)
+        .sheet(isPresented: $viewModel.isShowingImagePicker) {
+            ImagePickerView(selectedImage: $viewModel.selectedImage, isPresented: $viewModel.isShowingImagePicker)
         }
     }
 }

@@ -40,7 +40,10 @@
 		3EE1394F2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1394E2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift */; };
 		3EE139512ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE139502ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift */; };
 		3EE139542AE66E7800B4C6B4 /* TableSpreadsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE139532AE66E7800B4C6B4 /* TableSpreadsheetView.swift */; };
-		3EFA041B2AED564200290D32 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041A2AED564200290D32 /* PDFView.swift */; };
+		3EFA041B2AED564200290D32 /* ProtocolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041A2AED564200290D32 /* ProtocolView.swift */; };
+		3EFA041E2AEEF7E300290D32 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041D2AEEF7E300290D32 /* EmailView.swift */; };
+		3EFA04202AEEF93900290D32 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041F2AEEF93900290D32 /* EmailViewModel.swift */; };
+		3EFA04222AEFAE9000290D32 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA04212AEFAE9000290D32 /* MailComposeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,7 +81,10 @@
 		3EE1394E2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolPDFView.swift; sourceTree = "<group>"; };
 		3EE139502ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolPDFViewModel.swift; sourceTree = "<group>"; };
 		3EE139532AE66E7800B4C6B4 /* TableSpreadsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSpreadsheetView.swift; sourceTree = "<group>"; };
-		3EFA041A2AED564200290D32 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
+		3EFA041A2AED564200290D32 /* ProtocolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolView.swift; sourceTree = "<group>"; };
+		3EFA041D2AEEF7E300290D32 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
+		3EFA041F2AEEF93900290D32 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
+		3EFA04212AEFAE9000290D32 /* MailComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +112,7 @@
 				3EE1394E2ADFCBDB00B4C6B4 /* ProtocolPDFView.swift */,
 				3EE139502ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift */,
 				3E88174F2AE713FD00E0A83C /* Extensions.swift */,
-				3EFA041A2AED564200290D32 /* PDFView.swift */,
+				3EFA041A2AED564200290D32 /* ProtocolView.swift */,
 			);
 			path = ProtocolPDF;
 			sourceTree = "<group>";
@@ -222,6 +228,7 @@
 		3EC9C98C2AB0C67600B3480D /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				3EFA041C2AEEF7D600290D32 /* Email */,
 				3E068E3C2ADECB270004B2D0 /* ProtocolPDF */,
 				3E068E342ADDAD100004B2D0 /* HomeView */,
 				3E089E972AD551A500C13B35 /* ProtocolData */,
@@ -267,6 +274,16 @@
 				3E88174D2AE6C28D00E0A83C /* HeaderSpreadsheetView.swift */,
 			);
 			path = "Spreadsheet Components";
+			sourceTree = "<group>";
+		};
+		3EFA041C2AEEF7D600290D32 /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				3EFA041D2AEEF7E300290D32 /* EmailView.swift */,
+				3EFA041F2AEEF93900290D32 /* EmailViewModel.swift */,
+				3EFA04212AEFAE9000290D32 /* MailComposeView.swift */,
+			);
+			path = Email;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,17 +365,20 @@
 				3EB82A552AB0F6B100A51574 /* ImagePickerView.swift in Sources */,
 				3E88174E2AE6C28D00E0A83C /* HeaderSpreadsheetView.swift in Sources */,
 				3E1640032AB453DA0058D1CA /* ImageFullScreenView.swift in Sources */,
+				3EFA04222AEFAE9000290D32 /* MailComposeView.swift in Sources */,
 				3E163FF92AB34DF80058D1CA /* CaptureFirstImageView.swift in Sources */,
 				3E2B0D792AE98707007A57B7 /* GraphViewModel.swift in Sources */,
 				3EE073322AD82C0C00D7BDCB /* ExitImagesView.swift in Sources */,
 				3EB82A532AB0F69700A51574 /* EntryImagesView.swift in Sources */,
 				3E163FFB2AB34E7E0058D1CA /* CaptureSecondImageView.swift in Sources */,
+				3EFA041E2AEEF7E300290D32 /* EmailView.swift in Sources */,
 				3E089E8F2ACEEA6F00C13B35 /* HeaderDetailsSpreadsheetView.swift in Sources */,
 				3E163FFF2AB3501D0058D1CA /* DisplayBothImagesView.swift in Sources */,
 				3E67D8742ABDCD120067A078 /* SpreadsheetViewModel.swift in Sources */,
 				3EE139512ADFCBEA00B4C6B4 /* ProtocolPDFViewModel.swift in Sources */,
 				3E089E912AD149D500C13B35 /* HeaderDataSpreadsheetView.swift in Sources */,
 				3E163FF52AB260F10058D1CA /* CameraCaptureModelView.swift in Sources */,
+				3EFA04202AEEF93900290D32 /* EmailViewModel.swift in Sources */,
 				3EE139542AE66E7800B4C6B4 /* TableSpreadsheetView.swift in Sources */,
 				3E068E332ADDAAC90004B2D0 /* DisplayBothImagesExitView.swift in Sources */,
 				3EB82A572AB103E900A51574 /* LocationManager.swift in Sources */,
@@ -368,7 +388,7 @@
 				3E8817502AE713FD00E0A83C /* Extensions.swift in Sources */,
 				3EC9C9902AB0C67600B3480D /* ContentView.swift in Sources */,
 				3EC9C98E2AB0C67600B3480D /* ProtocolApp.swift in Sources */,
-				3EFA041B2AED564200290D32 /* PDFView.swift in Sources */,
+				3EFA041B2AED564200290D32 /* ProtocolView.swift in Sources */,
 				3EE073342AD9397200D7BDCB /* HomeView.swift in Sources */,
 				3E1640072AB492080058D1CA /* SpreadsheetView.swift in Sources */,
 			);
@@ -507,6 +527,7 @@
 				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "In order to save the image";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In order to create a custom photo with the location details";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -543,6 +564,7 @@
 				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Protocol Need the Location to Use the Data for Photos";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "In order to save the image";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "In order to create a custom photo with the location details";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

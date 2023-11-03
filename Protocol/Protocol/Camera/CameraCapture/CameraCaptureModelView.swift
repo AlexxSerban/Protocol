@@ -8,10 +8,24 @@
 import Foundation
 import Photos
 import UIKit
+import Observation
 
-class CameraCaptureModelView: ObservableObject {
+@Observable
+class CameraCaptureModelView {
     
-    @Published var model: ProtocolData = ProtocolData()
+    var protocolData = ProtocolData.sharedData
+    
+    // Data
+    var selectedImage: UIImage?
+    var entryPhotos: String = "entry."
+    var exitPhotos: String = "exit."
+    
+    // Status
+    var isShowingImagePicker = false
+    var isFirstImageCaptured = false
+    var isSecondImageCaptured = false
+    var isBothImagesCaptured = false
+    var isRemakeVisible = true
 
     
     func addLocationDetailsToImage(_ image: UIImage, locationData: LocationData) -> UIImage? {
@@ -73,21 +87,25 @@ class CameraCaptureModelView: ObservableObject {
         return editedImage
     }
     
-    func saveImageData(image: UIImage, locationManager: LocationManager) {
-        if model.firstEntryImage == nil {
-            model.firstEntryImage = image
-            model.entryPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
-        }
-        else if model.secondEntryImage == nil {
-            model.secondEntryImage = image
-        } 
-        else if model.firstExitImage == nil {
-            model.firstExitImage = image
-            model.exitPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
-        }
-        else if model.secondExitImage == nil {
-            model.secondExitImage = image
+    func saveImagesData(image: UIImage, locationManager: LocationManager, entryOrExitType: String) {
+        if entryOrExitType == "entry." {
+            if protocolData.firstEntryImage == nil {
+                protocolData.firstEntryImage = image
+            } else if protocolData.secondEntryImage == nil {
+                protocolData.secondEntryImage = image
+                protocolData.entryPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
+                print("Entry Coordinates -> \(protocolData.entryPitCoordinates)")
+            }
+        } else if entryOrExitType == "exit." {
+            if protocolData.firstExitImage == nil {
+                protocolData.firstExitImage = image
+            } else if protocolData.secondExitImage == nil {
+                protocolData.secondExitImage = image
+                protocolData.exitPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
+                print("Exit Coordinates -> \(protocolData.exitPitCoordinates)")
+            }
         }
     }
+    
 }
 

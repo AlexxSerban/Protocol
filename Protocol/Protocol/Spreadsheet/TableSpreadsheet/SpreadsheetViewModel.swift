@@ -40,6 +40,15 @@ class SpreadsheetViewModel {
         return isCompleted
     }
     
+    func updateButtonAction(viewModel: SpreadsheetViewModel) {
+        if let enteredValue = Float(viewModel.protocolData.userEnteredValue) {
+            let lastRow = viewModel.protocolData.numberOfRowsCalculated - 1
+            let difference = Float(viewModel.protocolData.selectedRodSize.metersValue) - enteredValue
+            viewModel.protocolData.cellValuesString[lastRow][0] = String(format: "%.2f", difference)
+        }
+    }
+
+    
     // Generate a random value within a range (used for testing)
     func generateRandomValue() -> Float {
         return Float.random(in: 90...210)
