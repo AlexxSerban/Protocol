@@ -53,7 +53,8 @@ struct HeaderDetailsSpreadsheetView: View {
                             
                             TextField("", text: $viewModel.protocolData.cellValues[row][1].text)
                                 .multilineTextAlignment(.center)
-                                .lineLimit(nil)
+                                .lineLimit(3)
+                                
                         }
                         .border(Color.black, width: 1)
                     }
@@ -110,6 +111,7 @@ struct HeaderDetailsSpreadsheetView: View {
         }
         .navigationDestination(isPresented: $viewModel.isDataComplete, destination: {
             ProtocolPDFView()
+//            EmailView()
             
         })
         .onAppear {

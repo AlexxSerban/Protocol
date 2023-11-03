@@ -68,6 +68,7 @@ struct TableSpreadsheetView: View {
                     Text("\(row)")
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding(8)
+                        .border(Color.black, width: 1)
                     ForEach(0..<viewModel.protocolData.numberOfColumns, id: \.self) { column in
                         Text(viewModel.protocolData.cellValuesString[row][column])
                             .multilineTextAlignment(.center)

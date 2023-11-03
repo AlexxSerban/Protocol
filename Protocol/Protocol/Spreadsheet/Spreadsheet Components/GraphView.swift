@@ -13,40 +13,45 @@ struct GraphView: View {
     @State var viewModel: GraphViewModel = GraphViewModel()
     
     var body: some View {
-            VStack {
-                Text("Line Chart")
-                    .font(.title)
-                    .padding()
-                
+            VStack{
                 VStack {
-                    Chart {
-                        // Create LineMark and PointMark elements for each data point
-                        ForEach(0..<viewModel.totalRows, id: \.self) { index in
-                            LineMark(
-                                x: .value("Rod (Nr.)", index.advanced(by: 1)),
-                                y: .value("Depth (cm)", Double(viewModel.protocolData.cellValuesString[index][1]) ?? 0.0)
-                            )
-                            PointMark(
-                                x: .value("Rod (Nr.)", index.advanced(by: 1)),
-                                y: .value("Depth (cm)", Double(viewModel.protocolData.cellValuesString[index][1]) ?? 0.0)
-                            )
+                    Text("Line Chart")
+                        .font(.title)
+                        .padding()
+                    
+                    VStack {
+                        Chart {
+                            ForEach(0..<viewModel.totalRows, id: \.self) { index in
+                                LineMark(
+                                    x: .value("Rod (Nr.)", index.advanced(by: 1)),
+                                    y: .value("Depth (cm)", Double(viewModel.protocolData.cellValuesString[index][1]) ?? 0.0)
+                                )
+                                PointMark(
+                                    x: .value("Rod (Nr.)", index.advanced(by: 1)),
+                                    y: .value("Depth (cm)", Double(viewModel.protocolData.cellValuesString[index][1]) ?? 0.0)
+                                )
+                            }
                         }
-                    }
-                    .chartYScale(domain: [viewModel.protocolData.xAxisValues, 0])
-                    .chartXScale(domain: [0, viewModel.protocolData.numberOfRowsCalculated + 1])
-                    .aspectRatio(1, contentMode: .fit)
-                    .chartYAxis {
-                        AxisMarks(position: .leading, values: .automatic(desiredCount: viewModel.protocolData.numberOfRowsCalculated))
-                    }
-                    .chartXAxis {
-                        AxisMarks(position: .top, values: .automatic(desiredCount: viewModel.protocolData.xAxisValues)) { _ in
-                            AxisValueLabel(anchor: .center)
-                            AxisGridLine()
+                        .chartYScale(domain: [viewModel.protocolData.xAxisValues, 0])
+                        .chartXScale(domain: [0, viewModel.protocolData.numberOfRowsCalculated + 1])
+                        .aspectRatio(1, contentMode: .fit)
+    //                    .aspectRatio(contentMode: .fit)
+                        .chartYAxis {
+                            AxisMarks(position: .leading, values: .automatic(desiredCount: viewModel.protocolData.numberOfRowsCalculated))
                         }
+                        .chartXAxis {
+                            AxisMarks(position: .top, values: .automatic(desiredCount: viewModel.protocolData.xAxisValues)) { _ in
+                                AxisValueLabel(anchor: .center)
+                                AxisGridLine()
+                            }
+                        }
+//                        .frame(maxHeight: .infinity)
+                        .frame(width: 750, height: 700)
                     }
-                    .frame(maxHeight: .infinity)
+                    .padding()
+                    .frame(maxWidth: .infinity ,maxHeight: .infinity)
                 }
-                .padding()
+                .frame(maxHeight: .infinity)
             }
         .onAppear {
             viewModel.updateXAxisValues()

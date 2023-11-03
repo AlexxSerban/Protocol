@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct DisplayBothImagesView: View {
-    var viewModel: CameraCaptureModelView // The view model for managing captured images
+    @State var viewModel: CameraCaptureModelView // The view model for managing captured images
 
     @State private var isImage1FullScreen = false // Control fullscreen display for the first image
     @State private var isImage2FullScreen = false // Control fullscreen display for the second image
@@ -20,7 +20,7 @@ struct DisplayBothImagesView: View {
             withAnimation(.easeInOut(duration: 0.5)) {
                 VStack {
                     HStack {
-                        Image(uiImage: viewModel.model.firstEntryImage ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: viewModel.protocolData.firstEntryImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 200, height: 200)
                             .scaledToFill()
@@ -32,11 +32,11 @@ struct DisplayBothImagesView: View {
                             }
                             .fullScreenCover(isPresented: $isImage1FullScreen) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
-                                    ImageFullScreenView(image: viewModel.model.firstEntryImage ?? UIImage(systemName: "photo")!)
+                                    ImageFullScreenView(image: viewModel.protocolData.firstEntryImage ?? UIImage(systemName: "photo")!)
                                 }
                             }
 
-                        Image(uiImage: viewModel.model.secondEntryImage ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: viewModel.protocolData.secondEntryImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 200, height: 200)
                             .scaledToFill()
@@ -48,7 +48,7 @@ struct DisplayBothImagesView: View {
                             }
                             .fullScreenCover(isPresented: $isImage2FullScreen) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
-                                    ImageFullScreenView(image: viewModel.model.secondEntryImage ?? UIImage(systemName: "photo")!)
+                                    ImageFullScreenView(image: viewModel.protocolData.secondEntryImage ?? UIImage(systemName: "photo")!)
                                 }
                             }
                     }

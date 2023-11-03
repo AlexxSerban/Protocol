@@ -11,10 +11,10 @@ import SwiftUI
 import MapKit
 
 class LocationManager: NSObject, ObservableObject {
-    private let locationManager = CLLocationManager()
+    @Published var locationManager = CLLocationManager()
     @Published var region = MKCoordinateRegion()
     @Published var location: CLLocation?
-    let geocoder = CLGeocoder()
+    @Published var geocoder = CLGeocoder()
     @Published var locationData = LocationData()
     
     override init() {
@@ -80,5 +80,6 @@ extension LocationManager: CLLocationManagerDelegate {
         self.location = location
         self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
         getCurrentDateTime()
+        print("S-au actualizat coordonatele")
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PDFView: View {
+struct ProtocolView: View {
     @State var viewModel = ProtocolPDFViewModel()
     @State var viewModelSpreadsheet = SpreadsheetViewModel()
     @State var viewModelGraph = GraphViewModel()
@@ -20,12 +20,14 @@ struct PDFView: View {
             TableSpreadsheetView(viewModel: viewModelSpreadsheet)
                 .frame(maxHeight: .infinity)
             
-    //                GraphView(viewModel: viewModelGraph)
-    //                    .frame(maxHeight: .infinity)
+            GraphView(viewModel: viewModelGraph)
+                .frame(maxWidth: .infinity,maxHeight: .infinity)
         }
+        .padding()
+        .frame(maxWidth: .infinity,maxHeight: .infinity)
     }
 }
 
 #Preview {
-    PDFView()
+    ProtocolView()
 }

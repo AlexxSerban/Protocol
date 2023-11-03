@@ -9,22 +9,18 @@ import SwiftUI
 
 // Define a SwiftUI view named CaptureSecondImageView
 struct CaptureSecondImageView: View {
-    @Binding var selectedImage: UIImage? // Store the selected image
-    @ObservedObject var viewModel: CameraCaptureModelView // The view model for capturing images
-    @ObservedObject var locationManager: LocationManager // The location manager
-    @Binding var isSecondImageCaptured: Bool // Track if the second image is captured
-    @Binding var isBothImagesCaptured: Bool // Track if both images are captured
-    @Binding var isShowingImagePicker: Bool // Control whether the image picker is displayed
-    @State private var isRemakeVisible = false // Control the visibility of the "Remake" button
-    @Binding var entryOrExitType: String
+    @State var viewModel: CameraCaptureModelView
+    @StateObject var locationManager: LocationManager
+
+    var entryOrExitType: String
     
     var body: some View {
         VStack(spacing: 16) {
-            if selectedImage == nil {
-                // Display this view when no image is selected
+            if viewModel.selectedImage == nil {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack{
                         VStack(spacing: 16) {
+                            
                             Text("Location Details")
                                 .font(.headline)
                                 .foregroundColor(Color("Text"))
@@ -35,6 +31,7 @@ struct CaptureSecondImageView: View {
                             Text("Country: \(locationManager.locationData.country)")
                             Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
                         }
+                        
                         Text("Open the camera to take the second photo for " + entryOrExitType)
                             .font(.callout)
                             .foregroundColor(Color("Text"))
@@ -42,7 +39,7 @@ struct CaptureSecondImageView: View {
                             .padding()
                         
                         Button(action: {
-                            isShowingImagePicker.toggle()
+                            viewModel.isShowingImagePicker.toggle()
                         }) {
                             Text("Camera")
                                 .font(.subheadline)
@@ -57,10 +54,10 @@ struct CaptureSecondImageView: View {
                 }
             }
             else {
-                // Display this view when an image is selected
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
-                        Image(uiImage: selectedImage ?? UIImage(systemName: "photo")!)
+                        
+                        Image(uiImage: viewModel.selectedImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 410, height: 410)
                             .scaledToFill()
@@ -70,7 +67,7 @@ struct CaptureSecondImageView: View {
                         
                         HStack (spacing: 16) {
                             Button(action: {
-                                isShowingImagePicker.toggle()
+                                viewModel.isShowingImagePicker.toggle()
                             }) {
                                 Text("Remake")
                                     .font(.subheadline)
@@ -82,12 +79,14 @@ struct CaptureSecondImageView: View {
                             }
                             
                             Button(action: {
-                                if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
-                                    viewModel.saveImageData(image: imageWithLocationDetails, locationManager: locationManager)
-                                    selectedImage = nil
-                                    isBothImagesCaptured = true
-                                    isSecondImageCaptured = true
-                                    isRemakeVisible = false
+                                if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(viewModel.selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
+                                    viewModel.saveImagesData(image: imageWithLocationDetails,
+                                                             locationManager: locationManager,
+                                                             entryOrExitType: entryOrExitType)
+                                    viewModel.selectedImage = nil
+                                    viewModel.isBothImagesCaptured = true
+                                    viewModel.isSecondImageCaptured = true
+                                    viewModel.isRemakeVisible = false
                                 }
                             }) {
                                 Text("Save image")
@@ -110,13 +109,9 @@ struct CaptureSecondImageView: View {
 struct CaptureSecondImageView_Previews: PreviewProvider {
     static var previews: some View {
         CaptureSecondImageView(
-            selectedImage: .constant(nil),
             viewModel: CameraCaptureModelView(),
             locationManager: LocationManager(),
-            isSecondImageCaptured: .constant(false),
-            isBothImagesCaptured: .constant(false),
-            isShowingImagePicker: .constant(false),
-            entryOrExitType: .constant("Exit")
+            entryOrExitType: ""
         )
     }
 }

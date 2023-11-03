@@ -34,7 +34,8 @@ struct ProtocolApp: App {
 //            ProtocolPDFView()
 //            MainSpreadsheetView()
 //                .environmentObject(locationManager)
-
+//            EmailView()
+//            MailComposeView()
         }
     }
 }

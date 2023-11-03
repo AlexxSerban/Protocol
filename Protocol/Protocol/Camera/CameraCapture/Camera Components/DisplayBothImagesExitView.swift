@@ -19,7 +19,7 @@ struct DisplayBothImagesExitView: View {
             withAnimation(.easeInOut(duration: 0.5)) {
                 VStack {
                     HStack {
-                        Image(uiImage: viewModel.model.firstEntryImage ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: viewModel.protocolData.firstExitImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 200, height: 200)
                             .scaledToFill()
@@ -31,11 +31,11 @@ struct DisplayBothImagesExitView: View {
                             }
                             .fullScreenCover(isPresented: $isImage1FullScreen) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
-                                    ImageFullScreenView(image: viewModel.model.firstEntryImage ?? UIImage(systemName: "photo")!)
+                                    ImageFullScreenView(image: viewModel.protocolData.firstEntryImage ?? UIImage(systemName: "photo")!)
                                 }
                             }
 
-                        Image(uiImage: viewModel.model.secondEntryImage ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: viewModel.protocolData.secondExitImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 200, height: 200)
                             .scaledToFill()
@@ -47,7 +47,7 @@ struct DisplayBothImagesExitView: View {
                             }
                             .fullScreenCover(isPresented: $isImage2FullScreen) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
-                                    ImageFullScreenView(image: viewModel.model.secondEntryImage ?? UIImage(systemName: "photo")!)
+                                    ImageFullScreenView(image: viewModel.protocolData.secondEntryImage ?? UIImage(systemName: "photo")!)
                                 }
                             }
                     }

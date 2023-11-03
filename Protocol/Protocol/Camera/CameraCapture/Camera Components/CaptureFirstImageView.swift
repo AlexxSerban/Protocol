@@ -9,18 +9,14 @@ import SwiftUI
 
 struct CaptureFirstImageView: View {
     
-    @Binding var isShowingImagePicker: Bool // Control whether the image picker is displayed
-    @Binding var selectedImage: UIImage? // Store the selected image
-    @State private var isRemakeVisible = true // Control the visibility of the "Remake" button
-    @Binding var isFirstImageCaptured: Bool // Track if the first image is captured
-    @ObservedObject var viewModel: CameraCaptureModelView // The view model for capturing images
-    @ObservedObject var locationManager: LocationManager // The location manager
-    @Binding var entryOrExitType: String
+    @State var viewModel: CameraCaptureModelView
+    @StateObject var locationManager: LocationManager
+    var entryOrExitType: String
+
     
     var body: some View {
         VStack(spacing: 16) {
-            if selectedImage == nil {
-                // Display this view when no image is selected
+            if viewModel.selectedImage == nil {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
                         VStack(spacing: 16) {
@@ -42,11 +38,9 @@ struct CaptureFirstImageView: View {
                             Text("Country: \(locationManager.locationData.country)")
                             Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
                         }
-                        
-                        
                       
                         Button(action: {
-                            isShowingImagePicker.toggle()
+                            viewModel.isShowingImagePicker.toggle()
                         }) {
                             Text("Camera")
                                 .font(.subheadline)
@@ -61,10 +55,9 @@ struct CaptureFirstImageView: View {
                 }
             }
             else {
-                // Display this view when an image is selected
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
-                        Image(uiImage: selectedImage ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: viewModel.selectedImage ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .frame(width: 410, height: 410)
                             .scaledToFill()
@@ -74,7 +67,7 @@ struct CaptureFirstImageView: View {
                         
                         HStack(spacing: 16) {
                             Button(action: {
-                                isShowingImagePicker.toggle()
+                                viewModel.isShowingImagePicker.toggle()
                             }) {
                                 Text("Remake")
                                     .font(.subheadline)
@@ -86,11 +79,13 @@ struct CaptureFirstImageView: View {
                             }
                             
                             Button(action: {
-                                if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
-                                    viewModel.saveImageData(image: imageWithLocationDetails, locationManager: locationManager)
-                                    selectedImage = nil
-                                    isFirstImageCaptured = true
-                                    isRemakeVisible = false
+                                if let imageWithLocationDetails = viewModel.addLocationDetailsToImage(viewModel.selectedImage ?? UIImage(systemName: "photo")!, locationData: locationManager.locationData) {
+                                    viewModel.saveImagesData(image: imageWithLocationDetails,
+                                                             locationManager: locationManager,
+                                                             entryOrExitType: entryOrExitType)
+                                    viewModel.selectedImage = nil
+                                    viewModel.isFirstImageCaptured = true
+                                    viewModel.isRemakeVisible = false
                                     print("The first photo has been taken")
                                 }
                             }) {
@@ -118,12 +113,9 @@ struct CaptureFirstImageView: View {
 struct CaptureFirstImageView_Previews: PreviewProvider {
     static var previews: some View {
         CaptureFirstImageView(
-            isShowingImagePicker: .constant(false),
-            selectedImage: .constant(nil),
-            isFirstImageCaptured: .constant(false),
             viewModel: CameraCaptureModelView(),
             locationManager: LocationManager(),
-            entryOrExitType: .constant("Exit")
+            entryOrExitType: ""
         )
     }
 }
