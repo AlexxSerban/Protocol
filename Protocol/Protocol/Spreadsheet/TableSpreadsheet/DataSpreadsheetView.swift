@@ -13,13 +13,14 @@ struct DataSpreadsheetView: View {
     
     var body: some View {
         VStack(spacing: 50) {
-            // Input field for the number of meters
             VStack {
                 Text("Enter the number of meters for the job")
-                    .font(.headline)
+                    .font(.title)
                     .multilineTextAlignment(.center)
+                    .padding()
                 
                 TextField("Enter the number of meters", text: $viewModel.protocolData.numberOfMeters)
+                    .font(.subheadline)
                     .frame(width: 350)
                     .keyboardType(.numberPad)
                     .padding()
@@ -27,13 +28,14 @@ struct DataSpreadsheetView: View {
                     .cornerRadius(10)
             }
             
-            // Input field for the size of the first rod
             VStack {
                 Text("Enter the size of the first rod")
-                    .font(.headline)
+                    .font(.title)
                     .multilineTextAlignment(.center)
+                    .padding()
                 
                 TextField("Enter the size of the first rod", text: $viewModel.protocolData.firstRodSize)
+                    .font(.subheadline)
                     .frame(width: 350)
                     .keyboardType(.numbersAndPunctuation)
                     .padding()
@@ -41,23 +43,23 @@ struct DataSpreadsheetView: View {
                     .cornerRadius(10)
             }
             
-            // Picker for selecting the rod size
             VStack {
                 Text("Choose the rod size for this job")
-                    .font(.headline)
+                    .font(.title)
                     .multilineTextAlignment(.center)
+                    .padding()
                 
                 Picker("Rod Size", selection: $viewModel.protocolData.selectedRodSize) {
                     ForEach(RodSize.allCases, id: \.self) { size in
                         Text(size.rawValue)
                             .tag(size)
-                            .font(.largeTitle)
+                            .font(.subheadline)
                     }
                 }
                 .pickerStyle(.menu)
             }
+            .padding()
             
-            // Button to proceed
             Button(action: {
                 if !viewModel.protocolData.numberOfMeters.isEmpty && !viewModel.protocolData.firstRodSize.isEmpty {
                     viewModel.showSpreadsheet = true
@@ -67,13 +69,14 @@ struct DataSpreadsheetView: View {
                 }
             }) {
                 Text("Next")
-                    .padding()
-                    .background(Color.blue)
+                    .font(.headline)
+                    .fontWeight(.bold)
                     .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .padding()
+                    .frame(width: 250, height: 50)
+                    .background(Color("ColorBox"))
+                    .cornerRadius(15)
             }
-            
-            // Alert for incomplete data
             .alert(isPresented: $viewModel.dataSpreadsheetShowAlert) {
                 Alert(
                     title: Text("Attention"),
@@ -86,7 +89,7 @@ struct DataSpreadsheetView: View {
     }
 }
 
-// Preview for testing
+
 struct DataSpreadsheetView_Previews: PreviewProvider {
     
     static var previews: some View {

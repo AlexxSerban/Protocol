@@ -26,7 +26,6 @@ struct MainSpreadsheetView: View {
     }
 }
 
-// A preview block for testing the MainSpreadsheetView
 struct MainSpreadsheetView_Previews: PreviewProvider {
     static var previews: some View {
         MainSpreadsheetView()

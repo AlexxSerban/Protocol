@@ -16,30 +16,27 @@ struct HeaderDetailsSpreadsheetView: View {
             VStack(spacing: 30) {
                 
                 List {
-                    // Header of the spreadsheet
                     HStack(spacing: 0) {
                         Image("IconTechnoskopic")
                         Spacer()
                         Text("HDD PROTOCOL")
                             .bold()
                             .font(.title)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("ColorBox"))
                         Spacer()
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .background(Color.gray.opacity(0.5))
                     .border(Color.black, width: 1)
                     
-                    // Section for general info
                     Text("GENERAL INFO")
                         .bold()
                         .font(.title)
-                        .foregroundColor(.black)
+                        .foregroundColor(Color("ColorBox"))
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .background(Color.mint)
+                        .background(Color.gray.opacity(0.5))
                         .border(Color.black, width: 1)
                     
-                    // Body cells
                     ForEach(0..<$viewModel.protocolData.firstColumn.count - 1, id: \.self) { row in
                         HStack(spacing: 0) {
                             Divider()
@@ -59,7 +56,6 @@ struct HeaderDetailsSpreadsheetView: View {
                         .border(Color.black, width: 1)
                     }
                     
-                    // Row for contractor's signature
                     HStack(spacing: 0) {
                         Divider()
                         
@@ -93,7 +89,7 @@ struct HeaderDetailsSpreadsheetView: View {
                     }) {
                         Text("Next")
                             .padding()
-                            .background(Color.blue)
+                            .background(Color("ColorBox"))
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -111,8 +107,6 @@ struct HeaderDetailsSpreadsheetView: View {
         }
         .navigationDestination(isPresented: $viewModel.isDataComplete, destination: {
             ProtocolPDFView()
-//            EmailView()
-            
         })
         .onAppear {
             viewModel.initializeSpreadsheetFirm()

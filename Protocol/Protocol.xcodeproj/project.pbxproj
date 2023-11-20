@@ -43,7 +43,6 @@
 		3EFA041B2AED564200290D32 /* ProtocolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041A2AED564200290D32 /* ProtocolView.swift */; };
 		3EFA041E2AEEF7E300290D32 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041D2AEEF7E300290D32 /* EmailView.swift */; };
 		3EFA04202AEEF93900290D32 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA041F2AEEF93900290D32 /* EmailViewModel.swift */; };
-		3EFA04222AEFAE9000290D32 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFA04212AEFAE9000290D32 /* MailComposeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,7 +83,6 @@
 		3EFA041A2AED564200290D32 /* ProtocolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolView.swift; sourceTree = "<group>"; };
 		3EFA041D2AEEF7E300290D32 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		3EFA041F2AEEF93900290D32 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
-		3EFA04212AEFAE9000290D32 /* MailComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,7 +279,6 @@
 			children = (
 				3EFA041D2AEEF7E300290D32 /* EmailView.swift */,
 				3EFA041F2AEEF93900290D32 /* EmailViewModel.swift */,
-				3EFA04212AEFAE9000290D32 /* MailComposeView.swift */,
 			);
 			path = Email;
 			sourceTree = "<group>";
@@ -365,7 +362,6 @@
 				3EB82A552AB0F6B100A51574 /* ImagePickerView.swift in Sources */,
 				3E88174E2AE6C28D00E0A83C /* HeaderSpreadsheetView.swift in Sources */,
 				3E1640032AB453DA0058D1CA /* ImageFullScreenView.swift in Sources */,
-				3EFA04222AEFAE9000290D32 /* MailComposeView.swift in Sources */,
 				3E163FF92AB34DF80058D1CA /* CaptureFirstImageView.swift in Sources */,
 				3E2B0D792AE98707007A57B7 /* GraphViewModel.swift in Sources */,
 				3EE073322AD82C0C00D7BDCB /* ExitImagesView.swift in Sources */,

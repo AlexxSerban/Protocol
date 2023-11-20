@@ -21,6 +21,7 @@ struct HeaderDataSpreadsheetView: View {
                 InputFieldView(label: "Area", value: $viewModel.protocolData.area)
                 InputFieldView(label: "Street", value: $viewModel.protocolData.street)
                 InputFieldView(label: "Pipe Bundle", value: $viewModel.protocolData.pipeBundle)
+                    .keyboardType(.numbersAndPunctuation)
                 InputFieldView(label: "Total Pipes", value: $viewModel.protocolData.totalPipes)
                     .keyboardType(.numbersAndPunctuation)
                 InputFieldView(label: "Drill Length", value: $viewModel.protocolData.drillLength)
@@ -37,7 +38,7 @@ struct HeaderDataSpreadsheetView: View {
                     }) {
                         Text("Select the signature")
                             .padding()
-                            .background(Color.blue)
+                            .background(Color("ColorBox"))
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -57,7 +58,7 @@ struct HeaderDataSpreadsheetView: View {
                     }) {
                         Text("Next")
                             .padding()
-                            .background(Color.blue)
+                            .background(Color("ColorBox"))
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -107,12 +108,10 @@ struct InputFieldView: View {
     }
 }
 
-// ImagePicker to select an image from the photo library
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     @Environment(\.presentationMode) var presentationMode
     
-    // The Coordinator is an inner class that acts as a delegate for UIImagePickerController.
     class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         @Binding var presentationMode: PresentationMode
         @Binding var image: UIImage?
@@ -122,37 +121,29 @@ struct ImagePicker: UIViewControllerRepresentable {
             _image = image
         }
         
-        // This method is called when the user selects an image.
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
                 image = uiImage
             }
             
-            // Close the ImagePicker.
             presentationMode.dismiss()
         }
         
-        // This method is called when the user cancels image selection.
         func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            // Close the ImagePicker.
             presentationMode.dismiss()
         }
     }
     
-    // This method creates and returns a Coordinator instance.
     func makeCoordinator() -> Coordinator {
         return Coordinator(presentationMode: presentationMode, image: $image)
     }
     
-    // This method creates and returns a UIImagePickerController instance.
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
         return picker
     }
     
-    // This method is used to update the UIImagePickerController instance with the given context.
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
-        // Nothing needs to be done here, but this method must be implemented.
     }
 }

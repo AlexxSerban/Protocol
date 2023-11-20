@@ -15,7 +15,6 @@ struct HeaderSpreadsheetView: View {
         
         VStack(spacing: 30) {
             VStack {
-                // Header of the spreadsheet
                 HStack(spacing: 0) {
                     Image("IconTechnoskopic")
                         .padding(8)
@@ -30,7 +29,6 @@ struct HeaderSpreadsheetView: View {
                 .background(Color.gray.opacity(0.5))
                 .border(Color.black, width: 1)
                 
-                // Section for general info
                 Text("GENERAL INFO")
                     .bold()
                     .font(.title)
@@ -39,7 +37,6 @@ struct HeaderSpreadsheetView: View {
                     .background(Color.mint)
                     .border(Color.black, width: 1)
                 
-                // Body cells
                 ForEach(0..<$viewModel.protocolData.firstColumn.count - 1, id: \.self) { row in
                     HStack(spacing: 0) {
                         Divider()
@@ -59,7 +56,6 @@ struct HeaderSpreadsheetView: View {
                     .border(Color.black, width: 1)
                 }
                 
-                // Row for contractor's signature
                 HStack(spacing: 0) {
                     Divider()
                     Text(viewModel.protocolData.cellValues[13][0].text)
@@ -76,7 +72,6 @@ struct HeaderSpreadsheetView: View {
                             .resizable()
                             .frame(width: 200, height: 200)
                     } else {
-                        // Add a placeholder image or text if there's no signature
                         Text("No Signature")
                             .padding(8)
                     }
@@ -88,9 +83,6 @@ struct HeaderSpreadsheetView: View {
             .padding()
             .onAppear {
                 viewModel.initializeSpreadsheetFirm()
-                print(viewModel.protocolData.numberOfMeters)
-                print(viewModel.protocolData.firstRodSize)
-                print(viewModel.protocolData.selectedRodSize)
             }
         }
     }

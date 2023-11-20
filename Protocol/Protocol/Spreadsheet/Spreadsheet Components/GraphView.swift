@@ -35,7 +35,6 @@ struct GraphView: View {
                         .chartYScale(domain: [viewModel.protocolData.xAxisValues, 0])
                         .chartXScale(domain: [0, viewModel.protocolData.numberOfRowsCalculated + 1])
                         .aspectRatio(1, contentMode: .fit)
-    //                    .aspectRatio(contentMode: .fit)
                         .chartYAxis {
                             AxisMarks(position: .leading, values: .automatic(desiredCount: viewModel.protocolData.numberOfRowsCalculated))
                         }
@@ -45,7 +44,6 @@ struct GraphView: View {
                                 AxisGridLine()
                             }
                         }
-//                        .frame(maxHeight: .infinity)
                         .frame(width: 750, height: 700)
                     }
                     .padding()

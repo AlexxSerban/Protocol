@@ -9,12 +9,10 @@ import SwiftUI
 import Foundation
 
 struct SpreadsheetView: View {
-    @State var viewModel: SpreadsheetViewModel
+    @State var viewModel: SpreadsheetViewModel 
     
     var body: some View {
-        
         VStack(spacing: 30) {
-            
             List {
                 HStack(spacing: 0) {
                     Text("HDD DIAGRAM")
@@ -25,7 +23,6 @@ struct SpreadsheetView: View {
                 }
                 .border(Color.black, width: 1)
                 
-                // Header row for the table
                 HStack(spacing: 0) {
                     Divider()
                     Text("Rod No.")
@@ -51,7 +48,6 @@ struct SpreadsheetView: View {
                 .background(Color.gray.opacity(0.5))
                 .border(Color.black, width: 1)
                 
-                // Loop to display table rows
                 ForEach(0..<viewModel.protocolData.numberOfRowsCalculated, id: \.self) { row in
                     HStack(spacing: 0) {
                         Rectangle()
@@ -65,9 +61,11 @@ struct SpreadsheetView: View {
                                 let difference = viewModel.protocolData.selectedRodSize.metersValue - (viewModel.protocolData.firstRodSize as NSString).floatValue
                                 TextField(String(format: "%.2f", difference), text: $viewModel.protocolData.cellValuesString[row][column])
                                     .multilineTextAlignment(.center)
+                                    
                             } else {
                                 TextField("", text: $viewModel.protocolData.cellValuesString[row][column])
                                     .multilineTextAlignment(.center)
+                                    .keyboardType(.numberPad)
                             }
                         }
                     }
@@ -84,28 +82,25 @@ struct SpreadsheetView: View {
             }
             
             HStack(spacing: 16) {
-                // Input field to update the last rod length
                 TextField("Enter the number of meters for the last rod", text: $viewModel.protocolData.userEnteredValue)
-                    .frame(width: 150)
+                    .frame(width: 250)
                     .keyboardType(.numbersAndPunctuation)
                     .padding()
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(10)
                 
-                // Button to update the last rod length
                 Button(action: {
                     viewModel.updateButtonAction(viewModel: viewModel)
                 }) {
                     Text("Update")
                         .padding()
-                        .background(Color.blue)
+                        .background(Color("ColorBox"))
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
                 
                 Spacer()
                 
-                // Button to proceed to the next step
                 Button(action: {
                     if viewModel.checkTableCompletion() {
                         viewModel.showGraph = true
@@ -116,7 +111,7 @@ struct SpreadsheetView: View {
                 }) {
                     Text("Next")
                         .padding()
-                        .background(Color.blue)
+                        .background(Color("ColorBox"))
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
@@ -130,9 +125,7 @@ struct SpreadsheetView: View {
     }
 }
 
-// Preview for testing
 struct SpreadsheetView_Previews: PreviewProvider {
-
     static var previews: some View {
         SpreadsheetView(viewModel: SpreadsheetViewModel())
     }

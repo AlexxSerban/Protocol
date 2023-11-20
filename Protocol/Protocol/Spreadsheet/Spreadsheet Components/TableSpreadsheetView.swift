@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TableSpreadsheetView: View {
     
-    @State var viewModel: SpreadsheetViewModel = SpreadsheetViewModel()
+    @State var viewModel: SpreadsheetViewModel
     
     var body: some View {
         
@@ -24,7 +24,6 @@ struct TableSpreadsheetView: View {
                 .border(Color.black, width: 1)
                 .padding()
             
-            // Header row for the table
             HStack(spacing: 0) {
                 Text("Rod No.")
                     .bold()
@@ -80,15 +79,12 @@ struct TableSpreadsheetView: View {
             }
         }
         .padding()
-        .onAppear {
-            viewModel.generateTableContent()
-        }
     }
 }
 
 struct SpreadsheetTableView_Previews: PreviewProvider {
     
     static var previews: some View {
-        TableSpreadsheetView()
+        TableSpreadsheetView(viewModel: SpreadsheetViewModel())
     }
 }

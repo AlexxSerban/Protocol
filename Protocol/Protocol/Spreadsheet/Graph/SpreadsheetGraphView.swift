@@ -22,7 +22,6 @@ struct SpreadsheetGraphView: View {
                     
                     VStack {
                         Chart {
-                            // Create LineMark and PointMark elements for each data point
                             ForEach(0..<viewModel.totalRows, id: \.self) { index in
                                 LineMark(
                                     x: .value("Rod (Nr.)", index.advanced(by: 1)),
@@ -60,7 +59,7 @@ struct SpreadsheetGraphView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color("ColorBox"))
                             .cornerRadius(10)
                     }
                 }
