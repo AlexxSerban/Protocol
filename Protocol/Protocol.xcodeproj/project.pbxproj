@@ -518,6 +518,7 @@
 				DEVELOPMENT_TEAM = 7D837Q8LBZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Protocol Need Camera to Take Photos Within The App";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
 				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
@@ -555,6 +556,7 @@
 				DEVELOPMENT_TEAM = 7D837Q8LBZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Protocol Need Camera to Take Photos Within The App";
 				INFOPLIST_KEY_NSDocumentsFolderUsageDescription = "Protocol Need To Download The PDF In Files";
 				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "Protocol Need To Download The PDF In Files";

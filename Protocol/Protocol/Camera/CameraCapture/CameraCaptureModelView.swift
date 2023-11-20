@@ -91,21 +91,34 @@ class CameraCaptureModelView {
         if entryOrExitType == "entry." {
             if protocolData.firstEntryImage == nil {
                 protocolData.firstEntryImage = image
+                saveImageToGallery(image: image)
             } else if protocolData.secondEntryImage == nil {
                 protocolData.secondEntryImage = image
+                saveImageToGallery(image: image)
                 protocolData.entryPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
-                print("Entry Coordinates -> \(protocolData.entryPitCoordinates)")
             }
         } else if entryOrExitType == "exit." {
             if protocolData.firstExitImage == nil {
                 protocolData.firstExitImage = image
+                saveImageToGallery(image: image)
             } else if protocolData.secondExitImage == nil {
                 protocolData.secondExitImage = image
                 protocolData.exitPitCoordinates = "\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E"
-                print("Exit Coordinates -> \(protocolData.exitPitCoordinates)")
+                saveImageToGallery(image: image)
             }
         }
     }
     
+    func saveImageToGallery(image: UIImage) {
+        PHPhotoLibrary.shared().performChanges {
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        } completionHandler: { success, error in
+            if success {
+                print("Image saved to gallery successfully.")
+            } else {
+                print("Error saving image to gallery: \(error?.localizedDescription ?? "")")
+            }
+        }
+    }
 }
 

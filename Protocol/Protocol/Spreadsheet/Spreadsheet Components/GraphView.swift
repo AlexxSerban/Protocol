@@ -39,7 +39,7 @@ struct GraphView: View {
                             AxisMarks(position: .leading, values: .automatic(desiredCount: viewModel.protocolData.numberOfRowsCalculated))
                         }
                         .chartXAxis {
-                            AxisMarks(position: .top, values: .automatic(desiredCount: viewModel.protocolData.xAxisValues)) { _ in
+                            AxisMarks(position: .top, values: .automatic(desiredCount: 10)) { _ in
                                 AxisValueLabel(anchor: .center)
                                 AxisGridLine()
                             }
