@@ -8,7 +8,6 @@
 import SwiftUI
 import PDFKit
 
-
 struct ProtocolPDFView: View {
     @State var viewModel = ProtocolPDFViewModel()
     
@@ -28,7 +27,7 @@ struct ProtocolPDFView: View {
                     } label: {
                         Text("Save PDF")
                             .padding()
-                            .background(Color.blue)
+                            .background(Color("SecondColorBox"))
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
@@ -40,17 +39,18 @@ struct ProtocolPDFView: View {
                     } label: {
                         Text("Next")
                             .padding()
-                            .background(Color.blue)
+                            .background(Color("ColorBox"))
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
                     
                 }
+                .padding()
             }
         }
         .padding()
         .sheet(isPresented: $viewModel.showShareSheet) {
-            viewModel.PDFUrl = nil
+            viewModel.protocolData.pdfFileURL = nil
         } content: {
             if let PDFUrl = viewModel.protocolData.pdfFileURL {
                 ShareSheet(urls: [PDFUrl])

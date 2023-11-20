@@ -12,43 +12,77 @@ struct CaptureFirstImageView: View {
     @State var viewModel: CameraCaptureModelView
     @StateObject var locationManager: LocationManager
     var entryOrExitType: String
-
+    
     
     var body: some View {
         VStack(spacing: 16) {
             if viewModel.selectedImage == nil {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
-                        VStack(spacing: 16) {
+                        VStack(alignment: .leading, spacing: 36) {
                             
-                            Text("Open the camera to take the first photo for " + entryOrExitType)
-                                .font(.callout)
+                            Text("Take the first photo for " + entryOrExitType)
+                                .font(.system(size: 36, weight: .bold))
                                 .foregroundColor(Color("Text"))
                                 .multilineTextAlignment(.leading)
-                                .padding()
                             
                             
                             Text("Location Details")
-                                .font(.headline)
+                                .font(.title2)
                                 .foregroundColor(Color("Text"))
-                                .padding()
+                                .fontWeight(.bold)
                             
-                            Text("Street: \(locationManager.locationData.street) \(locationManager.locationData.streetNumber)")
-                            Text("City: \(locationManager.locationData.postalCode) \(locationManager.locationData.city)")
-                            Text("Country: \(locationManager.locationData.country)")
-                            Text("Coord: \(locationManager.locationData.latitude) \(locationManager.locationData.longitude)")
+                            HStack {
+                                Text("Street: ")
+                                    .font(.title3)
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                                Text("\(locationManager.locationData.street) \(locationManager.locationData.streetNumber)")
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                            }
+                            HStack {
+                                Text("City: ")
+                                    .font(.title3)
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                                Text("\(locationManager.locationData.postalCode) \(locationManager.locationData.city)")
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                            }
+                            HStack {
+                                Text("Country: ")
+                                    .font(.title3)
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                                Text("\(locationManager.locationData.country)")
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                            }
+                            HStack {
+                                Text("Coord: ")
+                                    .font(.title3)
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                                Text("\(locationManager.locationData.latitude)N \(locationManager.locationData.longitude)E")
+                                    .foregroundColor(Color("Text"))
+                                    .fontWeight(.bold)
+                            }
+                            
                         }
-                      
+                        .padding()
+                        
                         Button(action: {
                             viewModel.isShowingImagePicker.toggle()
                         }) {
                             Text("Camera")
-                                .font(.subheadline)
+                                .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .padding()
-                                .background(Color.blue)
-                                .cornerRadius(10)
+                                .frame(width: 250, height: 50)
+                                .background(Color("ColorBox"))
+                                .cornerRadius(15)
                         }
                         .padding()
                     }
@@ -57,11 +91,11 @@ struct CaptureFirstImageView: View {
             else {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     VStack(spacing: 16) {
+                        
                         Image(uiImage: viewModel.selectedImage ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .frame(width: 410, height: 410)
-                            .scaledToFill()
-                            .background(Color.gray)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(maxWidth: 520, maxHeight: 500)
                             .cornerRadius(15)
                             .shadow(radius: 5)
                         
@@ -70,12 +104,13 @@ struct CaptureFirstImageView: View {
                                 viewModel.isShowingImagePicker.toggle()
                             }) {
                                 Text("Remake")
-                                    .font(.subheadline)
+                                    .font(.headline)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
                                     .padding()
-                                    .background(Color.mint)
-                                    .cornerRadius(10)
+                                    .frame(width: 250, height: 50)
+                                    .background(Color("ColorBox"))
+                                    .cornerRadius(15)
                             }
                             
                             Button(action: {
@@ -85,19 +120,17 @@ struct CaptureFirstImageView: View {
                                                              entryOrExitType: entryOrExitType)
                                     viewModel.selectedImage = nil
                                     viewModel.isFirstImageCaptured = true
-                                    viewModel.isRemakeVisible = false
-                                    print("The first photo has been taken")
-                                }
+                                    viewModel.isRemakeVisible = false                                }
                             }) {
                                 Text("Save image")
-                                    .font(.subheadline)
+                                    .font(.headline)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
                                     .padding()
-                                    .background(Color.green)
-                                    .cornerRadius(10)
+                                    .frame(width: 250, height: 50)
+                                    .background(Color("ColorBox"))
+                                    .cornerRadius(15)
                             }
-                            .padding()
                         }
                     }
                 }

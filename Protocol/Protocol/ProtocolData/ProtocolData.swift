@@ -9,11 +9,15 @@ import Foundation
 import SwiftUI
 import Combine
 import Observation
+import MessageUI
+import MobileCoreServices
+import UniformTypeIdentifiers
+import Observation
+import PDFKit
 
 @Observable
 class ProtocolData {
     
-    // Published properties to store various data
     var constructor: String = ""
     var firstRodSize: String = ""
     var userEnteredValue: String = ""
@@ -30,49 +34,43 @@ class ProtocolData {
     var exitPitCoordinates: String = ""
     var numberOfMeters = ""
     
-    var showSpreadsheet: Bool = false // Control displaying the spreadsheet
-    var isTableFullyCompleted: Bool = false // Control table completion status
-    var spreadsheetShowAlert: Bool = false // Control spreadsheet-related alerts
-    var dataSpreadsheetShowAlert: Bool = false // Control data spreadsheet-related alerts
-    var showGraph: Bool = false // Control displaying the graph
+    var showSpreadsheet: Bool = false
+    var isTableFullyCompleted: Bool = false
+    var spreadsheetShowAlert: Bool = false
+    var dataSpreadsheetShowAlert: Bool = false
+    var showGraph: Bool = false
     
-    var columnValues: [Double] = [] // Store column values for graph
-    var currentDate: Date = Date() // Store the current date
-    var selectedRodSize: RodSize = .halfMeter // Store the selected rod size
+    var columnValues: [Double] = []
+    var currentDate: Date = Date()
+    var selectedRodSize: RodSize = .halfMeter
     
-    var numberOfColumns: Int  = 4 // Number of columns in the table
-    var numberOfRowsCalculated: Int = 0 // Number of calculated rows
-    var xAxisValues: Int = 0 // X-axis values for the graph
+    var numberOfColumns: Int  = 4
+    var numberOfRowsCalculated: Int = 0
+    var xAxisValues: Int = 0
     
-    var firstEntryImage: UIImage? // First entry image
-    var secondEntryImage: UIImage? // Second entry image
-    var firstExitImage: UIImage? // First exit image
-    var secondExitImage: UIImage? // Second exit image
-    var contractorSignature: UIImage? // Contractor's signature
+    var firstEntryImage: UIImage?
+    var secondEntryImage: UIImage?
+    var firstExitImage: UIImage?
+    var secondExitImage: UIImage?
+    var contractorSignature: UIImage?
     
     var pdfFileURL: URL?
     
-    // Define an array of strings for the first column of the spreadsheet
     var firstColumn = ["Constructor", "Date (dd/mm/yy)", "Week-shot", "Area", "Street", "Pipe bundle", "Total number of pipes", "Drill length", "Pilot operator", "Drilling rig operator", "Supervisor", "Entry pit coordinates", "Exit pit coordinates", "Contractor signature"]
     
-    // Define an array to store cell values and images for the table
     var cellValues: [[CellModel]] = Array(repeating: [CellModel(text: "", image: nil), CellModel(text: "", image: nil)], count: 16)
     var cellValuesString: [[String]] = [[]]
     
-    // Define an array to control image visibility in the table
     var showImage = Array(repeating: false, count: 16)
     
-    // Shared instance of ProtocolData for data sharing
     static var sharedData = ProtocolData()
 }
 
-// Define a struct to represent cell data with text and image
 struct CellModel {
     var text: String
     var image: UIImage?
 }
 
-// Enumeration to represent different rod sizes
 enum RodSize: String, CaseIterable, Identifiable {
     case halfMeter = "0.5 meters"
     case meter128288 = "1.28288 meters"
@@ -84,7 +82,6 @@ enum RodSize: String, CaseIterable, Identifiable {
     
     var id: Self { self }
     
-    // A computed property to get the meters value for each rod size
     var metersValue: Float {
         switch self {
         case .halfMeter:

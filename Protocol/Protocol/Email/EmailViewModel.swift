@@ -15,33 +15,32 @@ import PDFKit
 @Observable
 class EmailViewModel: NSObject, MFMailComposeViewControllerDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    var protocolData = ProtocolData.sharedData
     var isShowingMailView = false
     var result: Result<MFMailComposeResult, Error>?
-    var selectedImages: [UIImage] = []
-    var protocolData = ProtocolData.sharedData
+    var selectedImagesForEmail: [UIImage] = []
     var toEmails = ["alexserbandaniel@yahoo.com"]
     var fromEmail = "alexserbandaniel@yahoo.com"
-    var emailSubject = "Your email subject here" // Set your email subject
-    var emailBody = "Your email body here" // Set your email body
+    var emailSubject = ""
+    var emailBody = ""
     var protocolPDF: PDFDocument?
+    let formattedDate = DateFormatter().string(from: Date()) 
 
-    // Function to attach the selected images
     func attachImages() {
         if let firstEntryImage = protocolData.firstEntryImage {
-            selectedImages.append(firstEntryImage)
+            selectedImagesForEmail.append(firstEntryImage)
         }
         if let secondEntryImage = protocolData.secondEntryImage {
-            selectedImages.append(secondEntryImage)
+            selectedImagesForEmail.append(secondEntryImage)
         }
         if let firstExitImage = protocolData.firstExitImage {
-            selectedImages.append(firstExitImage)
+            selectedImagesForEmail.append(firstExitImage)
         }
         if let secondExitImage = protocolData.secondExitImage {
-            selectedImages.append(secondExitImage)
+            selectedImagesForEmail.append(secondExitImage)
         }
     }
 
-    // Function to present the document picker for PDF selection
     func selectPDF() {
         let documentPicker = UIDocumentPickerViewController(documentTypes: [kUTTypePDF as String], in: .import)
         documentPicker.delegate = self
@@ -49,7 +48,6 @@ class EmailViewModel: NSObject, MFMailComposeViewControllerDelegate, UIDocumentP
         UIApplication.shared.windows.first?.rootViewController?.present(documentPicker, animated: true, completion: nil)
     }
 
-    // Function to compose and present the email
     func composeEmail() {
         if MFMailComposeViewController.canSendMail() {
             let mailComposeViewController = MFMailComposeViewController()
@@ -58,21 +56,18 @@ class EmailViewModel: NSObject, MFMailComposeViewControllerDelegate, UIDocumentP
             mailComposeViewController.setSubject(emailSubject)
             mailComposeViewController.setMessageBody(emailBody, isHTML: false)
 
-            // Attach images
-            for image in selectedImages {
+            for image in selectedImagesForEmail {
                 if let imageData = image.jpegData(compressionQuality: 1.0) {
                     mailComposeViewController.addAttachmentData(imageData, mimeType: "image/jpeg", fileName: "image.jpg")
                 }
             }
 
-            // Attach PDF file if available
             if let pdfURL = protocolData.pdfFileURL {
                 if let pdfData = try? Data(contentsOf: pdfURL) {
                     mailComposeViewController.addAttachmentData(pdfData, mimeType: "application/pdf", fileName: pdfURL.lastPathComponent)
                 }
             }
 
-            // Present the email composer
             UIApplication.shared.windows.first?.rootViewController?.present(mailComposeViewController, animated: true, completion: nil)
         }
     }
@@ -94,24 +89,17 @@ class EmailViewModel: NSObject, MFMailComposeViewControllerDelegate, UIDocumentP
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        // Handle cancellation if needed
     }
-    
     
     func getPDF() {
         if let pdfURL = protocolData.pdfFileURL {
             do {
-                // Load the PDF file into a variable
                 let pdfData = try Data(contentsOf: pdfURL)
 
-                // Create a new PDFDocument object from the data
                 let pdfDocument = PDFDocument(data: pdfData)
 
-                // Assign the PDFDocument object to a variable
                 protocolPDF = pdfDocument
-            } catch {
-                // Handle error
-            }
+            } catch {}
         }
     }
 }
